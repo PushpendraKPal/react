@@ -1,4 +1,4 @@
-function ExpenseDate(props) {
+const ExpenseDate = (props) => {
   let { date } = props;
   function formatDate(inputDate) {
     const [year, month, day] = inputDate.split("-");
@@ -29,7 +29,6 @@ function ExpenseDate(props) {
   }
 
   date = formatDate(date);
-
   return (
     <div>
       <div>{date.month}</div>
@@ -37,6 +36,6 @@ function ExpenseDate(props) {
       <div>{date.year}</div>
     </div>
   );
-}
+};
 
 export default ExpenseDate;

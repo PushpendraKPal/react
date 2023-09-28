@@ -10,7 +10,7 @@
 .itemsContainer {
   width: 500px;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 20% 70% 10%;
   padding: 20px;
   align-items: center;
   margin: auto;

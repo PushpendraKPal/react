@@ -5,7 +5,6 @@ const ExpenseFilter = (props) => {
   return (
     <div>
       <select value={props.filterVal} onChange={handleChange}>
-        <option>All</option>
         <option>2022</option>
         <option>2023</option>
         <option>2024</option>

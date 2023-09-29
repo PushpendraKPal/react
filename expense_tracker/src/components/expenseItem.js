@@ -3,6 +3,7 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseRow from "./ExpenseRow";
 import { useState } from "react";
 import ExpenseFilter from "./ExpenseFilter";
+import ExpenseChart from "./ExpenseChart";
 
 const ExpenseItem = () => {
   const expense = [
@@ -25,9 +26,9 @@ const ExpenseItem = () => {
       location: "Gas Station ABC",
     },
     {
-      date: "2023-09-24",
+      date: "2023-08-24",
       name: "Movie Tickets",
-      amount: 25.0,
+      amount: 500,
       location: "Cinema City",
     },
     {
@@ -69,14 +70,11 @@ const ExpenseItem = () => {
   ];
 
   const [data, setData] = useState([...expense]);
-  const [filterVal, setFilVal] = useState("All");
+  const [filterVal, setFilVal] = useState(2023);
   const [formVal, setFormVal] = useState(false);
 
   let filteredData = data.filter((e) => {
-    if (filterVal === "All") return true;
-    else {
-      return e.date.includes(filterVal);
-    }
+    return e.date.includes(filterVal);
   });
 
   let textOnFilter = "";
@@ -122,6 +120,7 @@ const ExpenseItem = () => {
         setFilVal={setFilVal}
         filterVal={filterVal}
       ></ExpenseFilter>
+      <ExpenseChart filteredData={filteredData}></ExpenseChart>
       {textOnFilter}
     </>
   );

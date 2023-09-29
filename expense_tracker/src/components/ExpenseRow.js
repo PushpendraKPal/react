@@ -11,7 +11,7 @@ const ExpenseRow = (props) => {
   };
 
   return (
-    <>
+    <li className="itemsContainer">
       <div>
         <ExpenseDate date={date} key={date}></ExpenseDate>
       </div>
@@ -23,7 +23,7 @@ const ExpenseRow = (props) => {
       <button className="del" onClick={clickHandler}>
         Change Amount $100
       </button>
-    </>
+    </li>
   );
 };
 

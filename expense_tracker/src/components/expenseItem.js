@@ -70,6 +70,7 @@ const ExpenseItem = () => {
 
   const [data, setData] = useState([...expense]);
   const [filterVal, setFilVal] = useState("All");
+  const [formVal, setFormVal] = useState(false);
 
   let filteredData = data.filter((e) => {
     if (filterVal === "All") return true;
@@ -102,9 +103,21 @@ const ExpenseItem = () => {
     );
   }
 
+  const handleForm = () => {
+    setFormVal((prev) => !prev);
+  };
+
   return (
     <>
-      <ExpenseForm data={data} setData={setData}></ExpenseForm>
+      {formVal ? (
+        <ExpenseForm
+          data={data}
+          setData={setData}
+          handleForm={handleForm}
+        ></ExpenseForm>
+      ) : (
+        <button onClick={handleForm}>Add Expense</button>
+      )}
       <ExpenseFilter
         setFilVal={setFilVal}
         filterVal={filterVal}

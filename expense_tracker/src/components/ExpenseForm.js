@@ -13,6 +13,11 @@ const ExpenseForm = (props) => {
     setDate("");
     setAmount("");
     setLocation("");
+    props.handleForm();
+  };
+
+  const handleCancel = () => {
+    props.handleForm();
   };
 
   return (
@@ -41,6 +46,7 @@ const ExpenseForm = (props) => {
         value={location}
         onChange={(e) => setLocation(e.target.value)}
       ></input>
+      <button onClick={handleCancel}>Cancel</button>
       <button type="submit">Add</button>
     </form>
   );

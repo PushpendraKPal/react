@@ -1,9 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
 import ExpenseItem from "./components/expenseItem";
+import ExpenseForm from "./components/ExpenseForm";
+import { useState } from "react";
 
 const App = () => {
-  const data = [
+  const expense = [
     {
       date: "2023-09-27",
       name: "Groceries",
@@ -66,9 +68,12 @@ const App = () => {
     },
   ];
 
+  const []
+
   return (
     <div className="App">
       <h2>Expense Items</h2>
+      <ExpenseForm data={data}></ExpenseForm>
       {data.map((ele) => {
         return (
           <ExpenseItem

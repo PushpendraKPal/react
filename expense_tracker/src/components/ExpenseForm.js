@@ -1,15 +1,20 @@
 import { useState } from "react";
 
 const ExpenseForm = (props) => {
-  let data = props.data;
   const [name, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("dd-mm-yy");
+  const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
 
   const clickHandler = () => {
-    data.unshift({ date, amount, name, location });
+    console.log(props.data);
+    props.setData([{ date, amount, name, location }, ...props.data]);
+    setTitle("");
+    setDate("");
+    setAmount("");
+    setLocation("");
   };
+
   return (
     <form>
       <label>Title</label>

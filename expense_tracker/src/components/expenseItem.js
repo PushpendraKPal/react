@@ -1,37 +1,90 @@
 import "./expenseItem.css";
-import ExpenseDate from "./ExpenseDate";
+import ExpenseForm from "./ExpenseForm";
+import ExpenseRow from "./ExpenseRow";
 import { useState } from "react";
 
-const ExpenseItem = (props) => {
-  const { date, name, amount, location } = props;
+const ExpenseItem = () => {
+  const expense = [
+    {
+      date: "2023-09-27",
+      name: "Groceries",
+      amount: 50.0,
+      location: "Local Supermarket",
+    },
+    {
+      date: "2023-09-26",
+      name: "Dinner",
+      amount: 30.0,
+      location: "Restaurant XYZ",
+    },
+    {
+      date: "2023-09-25",
+      name: "Gasoline",
+      amount: 40.0,
+      location: "Gas Station ABC",
+    },
+    {
+      date: "2023-09-24",
+      name: "Movie Tickets",
+      amount: 25.0,
+      location: "Cinema City",
+    },
+    {
+      date: "2023-09-23",
+      name: "Electronics",
+      amount: 300.0,
+      location: "Tech Store",
+    },
+    {
+      date: "2023-09-22",
+      name: "Lunch",
+      amount: 15.0,
+      location: "Cafeteria",
+    },
+    {
+      date: "2023-09-21",
+      name: "Home Rent",
+      amount: 1200.0,
+      location: "Landlord",
+    },
+    {
+      date: "2023-09-20",
+      name: "Clothing",
+      amount: 75.0,
+      location: "Fashion Store",
+    },
+    {
+      date: "2023-09-19",
+      name: "Utilities",
+      amount: 100.0,
+      location: "Utility Company",
+    },
+    {
+      date: "2023-09-18",
+      name: "Internet Bill",
+      amount: 50.0,
+      location: "Internet Provider",
+    },
+  ];
 
-  // const clickHandler = (event) => {
-  //   let parentDiv = event.currentTarget.parentNode;
-  //   console.log(parentDiv);
-  //   let grandparentNode = parentDiv.parentNode;
-  //   grandparentNode.removeChild(parentDiv);
-  // };
-
-  const [price, newPrice] = useState(amount);
-
-  const clickHandler = () => {
-    newPrice(100);
-  };
+  const [data, setData] = useState([...expense]);
 
   return (
-    <div className="itemsContainer">
-      <div>
-        <ExpenseDate date={date} key={date}></ExpenseDate>
+    <>
+      <ExpenseForm data={data} setData={setData}></ExpenseForm>
+      <div className="itemsContainer">
+        {data.map((ele) => {
+          return (
+            <ExpenseRow
+              name={ele.name}
+              date={ele.date}
+              amount={ele.amount}
+              location={ele.location}
+            ></ExpenseRow>
+          );
+        })}
       </div>
-      <div>
-        <span className="itemInfo">{name}</span>
-        <span className="itemInfo">$ {price}</span>
-        <span className="itemInfo">{location}</span>
-      </div>
-      <button className="del" onClick={clickHandler}>
-        Change Amount $100
-      </button>
-    </div>
+    </>
   );
 };
 

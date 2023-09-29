@@ -2,6 +2,7 @@ import "./expenseItem.css";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseRow from "./ExpenseRow";
 import { useState } from "react";
+import ExpenseFilter from "./ExpenseFilter";
 
 const ExpenseItem = () => {
   const expense = [
@@ -68,22 +69,34 @@ const ExpenseItem = () => {
   ];
 
   const [data, setData] = useState([...expense]);
+  const [filterVal, setFilVal] = useState("All");
 
   return (
     <>
       <ExpenseForm data={data} setData={setData}></ExpenseForm>
+      <ExpenseFilter
+        setFilVal={setFilVal}
+        filterVal={filterVal}
+      ></ExpenseFilter>
       <div className="itemsContainer">
-        {data.map((ele) => {
-          return (
-            <ExpenseRow
-              name={ele.name}
-              date={ele.date}
-              amount={ele.amount}
-              location={ele.location}
-              key={ele.name}
-            ></ExpenseRow>
-          );
-        })}
+        {data
+          .filter((e) => {
+            if (filterVal === "All") return true;
+            else {
+              return e.date.includes(filterVal);
+            }
+          })
+          .map((ele) => {
+            return (
+              <ExpenseRow
+                name={ele.name}
+                date={ele.date}
+                amount={ele.amount}
+                location={ele.location}
+                key={ele.name}
+              ></ExpenseRow>
+            );
+          })}
       </div>
     </>
   );

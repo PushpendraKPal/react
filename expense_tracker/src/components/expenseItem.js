@@ -80,6 +80,7 @@ const ExpenseItem = () => {
               date={ele.date}
               amount={ele.amount}
               location={ele.location}
+              key={ele.name}
             ></ExpenseRow>
           );
         })}

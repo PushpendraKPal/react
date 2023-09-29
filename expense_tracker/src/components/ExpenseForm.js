@@ -6,9 +6,9 @@ const ExpenseForm = (props) => {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
 
-  const clickHandler = () => {
-    console.log(props.data);
-    props.setData([{ date, amount, name, location }, ...props.data]);
+  const submitHandler = (e) => {
+    e.preventDefault();
+    props.setData((prev) => [{ date, name, amount, location }, ...prev]);
     setTitle("");
     setDate("");
     setAmount("");
@@ -16,7 +16,7 @@ const ExpenseForm = (props) => {
   };
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <label>Title</label>
       <input
         type="text"
@@ -41,7 +41,7 @@ const ExpenseForm = (props) => {
         value={location}
         onChange={(e) => setLocation(e.target.value)}
       ></input>
-      <button onClick={clickHandler}>Add</button>
+      <button type="submit">Add</button>
     </form>
   );
 };

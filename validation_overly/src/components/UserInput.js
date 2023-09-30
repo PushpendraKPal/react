@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const UserInput = (props) => {
   const { users, setUsers, setOverlay, setText } = props;
 
   const [username, setUsername] = useState("");
   const [age, setAge] = useState("");
+  const collegeName = useRef();
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -24,7 +25,13 @@ const UserInput = (props) => {
       setOverlay(true);
       return;
     }
-    setUsers([{ username, age }, ...users]);
+    let coll = collegeName.current.value;
+    if (coll.trim().length === 0) {
+      setText("Enter valid college name");
+      setOverlay(true);
+      return;
+    }
+    setUsers([{ username, age, college: coll }, ...users]);
     setAge("");
     setUsername("");
   };
@@ -32,10 +39,12 @@ const UserInput = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>Username</label>
+        <label>Username:</label>
         <input type="text" onChange={handleUsername} value={username}></input>
-        <label>Age</label>
+        <label>Age:</label>
         <input type="number" onChange={handleAge} value={age}></input>
+        <label>College:</label>
+        <input type="text" ref={collegeName}></input>
         <button type="submit">Add</button>
       </form>
     </div>

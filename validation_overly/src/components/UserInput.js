@@ -34,6 +34,7 @@ const UserInput = (props) => {
     setUsers([{ username, age, college: coll }, ...users]);
     setAge("");
     setUsername("");
+    collegeName.current.value = "";
   };
 
   return (

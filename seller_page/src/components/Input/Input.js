@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import "./Input.css";
 
 const Input = ({ products, setProducts }) => {
-  const [id, setId] = useState("");
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-
-  const handleId = (e) => {
-    setId(e.target.value);
-  };
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -29,21 +26,26 @@ const Input = ({ products, setProducts }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const id = uuidv4();
     if (id && name && price && description && category) {
       const newProduct = { id, price, name, category, description };
       setProducts((prev) => [newProduct, ...products]);
+      setCategory("");
+      setDescription("");
+      setName("");
+      setPrice("");
     } else if (id && name && price && description) {
       return alert("Select category");
     } else return alert("Fill the all fields");
   };
 
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label id="id">ID</label>
-          <input id="id" value={id} type="text" onChange={handleId}></input>
-        </div>
+      <form onSubmit={handleSubmit} className="form">
         <div>
           <label id="name">Name</label>
           <input
@@ -51,6 +53,7 @@ const Input = ({ products, setProducts }) => {
             value={name}
             type="text"
             onChange={handleName}
+            className="input"
           ></input>
         </div>
         <div>
@@ -60,6 +63,7 @@ const Input = ({ products, setProducts }) => {
             value={price}
             type="number"
             onChange={handlePrice}
+            className="input"
           ></input>
         </div>
         <div>
@@ -69,6 +73,7 @@ const Input = ({ products, setProducts }) => {
             value={description}
             type="text"
             onChange={handleDescription}
+            className="input"
           ></input>
         </div>
         <div>

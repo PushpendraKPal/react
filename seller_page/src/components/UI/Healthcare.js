@@ -1,4 +1,4 @@
-const Electronics = ({ products, setProducts }) => {
+const Healthcare = ({ products, setProducts }) => {
   const hcProducts = products.filter((ele) => ele.category === "healthcare");
 
   const handleDelete = (id) => {
@@ -7,7 +7,7 @@ const Electronics = ({ products, setProducts }) => {
   };
   return (
     <div>
-      <h3>Electronics Products</h3>
+      <h3>Healthcare Products</h3>
       {hcProducts.map((ele) => (
         <div>
           <div>{ele.id}</div>

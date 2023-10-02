@@ -7,7 +7,7 @@ const Food = ({ products, setProducts }) => {
   };
   return (
     <div>
-      <h3>Electronics Products</h3>
+      <h3>Food Products</h3>
       {foodProducts.map((ele) => (
         <div>
           <div>{ele.id}</div>

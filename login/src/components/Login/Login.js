@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -10,7 +10,6 @@ const reducer = (state, action) => {
       ...state,
       email: action.val,
       isValidEmail: action.val.includes("@"),
-      isValidForm: action.val.includes("@") && state.isValidPassword,
     };
   }
   if (action.type === "NEW_PASSWORD") {
@@ -18,8 +17,10 @@ const reducer = (state, action) => {
       ...state,
       password: action.val,
       isValidPassword: action.val.trim().length > 6,
-      isValidForm: state.isValidEmail && action.val.trim().length > 6,
     };
+  }
+  if (action.type === "FORM_VALIDATION") {
+    return { ...state, isValidForm: action.val };
   }
   return { ...state };
 };
@@ -46,6 +47,19 @@ const Login = (props) => {
     event.preventDefault();
     props.onLogin(state.email, state.password);
   };
+
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      dispatch({
+        type: "FORM_VALIDATION",
+        val: state.isValidEmail && state.isValidPassword,
+      });
+    }, 200);
+
+    return () => {
+      clearTimeout(identifier);
+    };
+  }, [state.email, state.password]);
 
   return (
     <Card className={classes.login}>

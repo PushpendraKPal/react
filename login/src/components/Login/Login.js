@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
 
 const reducer = (state, action) => {
   if (action.type === "NEW_EMAIL") {
@@ -33,6 +34,9 @@ const Login = (props) => {
     isValidPassword: false,
     isValidForm: false,
   };
+
+  const ctx = useContext(AuthContext);
+
   const [state, dispatch] = useReducer(reducer, inetialState);
 
   const emailChangeHandler = (event) => {
@@ -45,7 +49,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(state.email, state.password);
+    ctx.setIsLoggedIn((prev) => true);
   };
 
   useEffect(() => {

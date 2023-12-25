@@ -68,3 +68,29 @@
 .footer {
   margin-top: 50px;
 }
+
+.cart_btn {
+  margin-right: 2%;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px 5px 15px;
+}
+.cart_btn:hover {
+  background-color: gray;
+  font-size: 17px;
+  padding: 4px 14px 4px 14px;
+}
+
+.cart_Item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.cart {
+  position: fixed;
+  left: 50%;
+  background-color: white;
+  border: 1px solid gray;
+  width: 50%;
+  height: 100vh;
+}

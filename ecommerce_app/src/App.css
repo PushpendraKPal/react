@@ -99,3 +99,23 @@
 .total {
   margin-top: 20px;
 }
+
+.link {
+  text-decoration: none;
+  color: rgb(184, 184, 184);
+  margin-left: 20px;
+  font-size: 17px;
+}
+.lm {
+  margin-left: none;
+}
+.link:hover {
+  color: white;
+}
+.about {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 70%;
+  margin: auto;
+  text-align: justify;
+}

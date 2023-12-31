@@ -88,9 +88,14 @@
 
 .cart {
   position: fixed;
-  left: 50%;
+  left: 60%;
+  top: 55px;
   background-color: white;
-  border: 1px solid gray;
-  width: 50%;
-  height: 100vh;
+  border: 2px solid gray;
+  width: 40%;
+  height: 100%;
+  z-index: 1;
+}
+.total {
+  margin-top: 20px;
 }

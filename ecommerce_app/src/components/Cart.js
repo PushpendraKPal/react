@@ -1,41 +1,9 @@
 import "../App.css";
+import { AppState } from "../context/Context";
 
 const Cart = ({ cart }) => {
-  const cartElements = [
-    {
-      title: "Colors",
-
-      price: 100,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-
-      quantity: 2,
-    },
-
-    {
-      title: "Black and white Colors",
-
-      price: 50,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-
-      quantity: 3,
-    },
-
-    {
-      title: "Yellow and Black Colors",
-
-      price: 70,
-
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-
-      quantity: 1,
-    },
-  ];
-
+  const { state } = AppState();
+  const cartElements = state.cart;
   let total = cartElements.reduce((sum, e) => {
     return sum + e.quantity * e.price;
   }, 0);
@@ -62,9 +30,9 @@ const Cart = ({ cart }) => {
           </div>
         );
       })}
-      <div className="cart_Item">
-        <div></div>
-        <h4>Total = ${total}</h4>
+      <div className="cart_Item total">
+        <h4>Total</h4>
+        <h4>${total}</h4>
         <div>
           <button>Purchase</button>
         </div>

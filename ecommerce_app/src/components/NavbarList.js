@@ -27,6 +27,9 @@ const NavbarList = ({ cart }) => {
             <Link className="link" to={"/about"}>
               ABOUT
             </Link>
+            <Link className="link" to={"/contact"}>
+              CONTACT
+            </Link>
           </Nav>
         </Container>
         <button

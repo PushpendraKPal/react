@@ -5,7 +5,7 @@ const About = () => {
   return (
     <>
       <div className="header">The Generics</div>
-      <div className="music">ABOUT</div>
+      <div className="music">CONTACT US</div>
       <div className="about">
         <div>
           <img src="https://prasadyash2411.github.io/ecom-website/img/Album%202.png"></img>

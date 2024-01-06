@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import Loading from "./components/Loading";
 import Errors from "./components/Errors";
@@ -10,7 +10,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  async function getMoviesHandler() {
+  const getMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch("https://swapi.dev/api/films/");
@@ -34,7 +34,11 @@ function App() {
       setIsLoading(false);
       setError(err.message);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    getMoviesHandler();
+  }, [getMoviesHandler]);
 
   return (
     <div className="App">

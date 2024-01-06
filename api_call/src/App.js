@@ -19,21 +19,29 @@ function App() {
   const getMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch(
+        "https://ecom-app-4e9ce-default-rtdb.firebaseio.com/movies.json"
+      );
 
-      if (!response.ok) {
-        throw new Error("Something went wrong... Retrying");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Something went wrong... Retrying");
+      // }
       const data = await response.json();
 
-      const movies = data.results.map((e) => {
-        return {
-          id: e.episode_id,
-          title: e.title,
-          details: e.opening_crawl,
-          releaseDate: e.release_date,
-        };
-      });
+      // const movies = data.results.map((e) => {
+      //   return {
+      //     id: e.episode_id,
+      //     title: e.title,
+      //     details: e.opening_crawl,
+      //     releaseDate: e.release_date,
+      //   };
+      // });
+
+      console.log(response.ok);
+      let movies = [];
+      for (let key in data) {
+        movies.push({ ...data[key], id: key });
+      }
       setFilms(movies);
       setIsLoading(false);
     } catch (err) {
@@ -44,17 +52,20 @@ function App() {
 
   useEffect(() => {
     getMoviesHandler();
-  }, [getMoviesHandler]);
+  }, [getMoviesHandler, newMovie]);
 
   return (
     <div className="App">
+      {console.log(films)}
       <InputForm setNewMovie={setNewMovie} />
       <div>
         <button className="btn" onClick={getMoviesHandler}>
           Get Movies
         </button>
       </div>
-      {!isLoading && !error && <MovieList films={films} />}
+      {!isLoading && !error && (
+        <MovieList films={films} setNewMovie={setNewMovie} />
+      )}
       {isLoading && !error && <Loading />}
       {!isLoading && error && (
         <Errors

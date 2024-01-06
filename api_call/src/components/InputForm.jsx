@@ -1,19 +1,51 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const InputForm = ({ setNewMovie }) => {
   const [title, setTitle] = useState("");
   const [release, setRelease] = useState("");
   const [details, setDetails] = useState("");
+  let id;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const addMovie = useCallback(async () => {
+    const response = await fetch(
+      "https://ecom-app-4e9ce-default-rtdb.firebaseio.com/movies.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          id,
+          title,
+          releaseDate: release,
+          details,
+        }),
+        headers: {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      }
+    );
+
     setNewMovie((prev) => {
       return {
+        id,
         title,
         releaseDate: release,
         details,
       };
     });
+
+    //const data = await response.data.json();
+    console.log(response);
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    id = uuidv4();
+    addMovie();
+    setDetails("");
+    setTitle("");
+    setRelease("");
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -4,11 +4,17 @@ import { useCallback, useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import Loading from "./components/Loading";
 import Errors from "./components/Errors";
+import InputForm from "./components/InputForm";
 
 function App() {
   const [films, setFilms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [newMovie, setNewMovie] = useState({
+    title: "",
+    releaseDate: "",
+    details: "",
+  });
 
   const getMoviesHandler = useCallback(async () => {
     try {
@@ -42,6 +48,7 @@ function App() {
 
   return (
     <div className="App">
+      <InputForm setNewMovie={setNewMovie} />
       <div>
         <button className="btn" onClick={getMoviesHandler}>
           Get Movies

@@ -4,6 +4,7 @@ import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setISLoding] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,11 +13,32 @@ const AuthForm = () => {
   };
 
   const submitHandler = async (e) => {
+    setISLoding(true);
     e.preventDefault();
     if (!email || !password) return alert("Fill the all fields");
     if (password.length < 6)
       return alert("Password must have six or more characters");
     if (isLogin) {
+      try {
+        let response = await fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBmDxqC-JctIJwY7nM2lhOKLoLaMk7TjDw",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              password,
+              returnSecureToken: true,
+            }),
+          }
+        );
+        setISLoding(false);
+        let data = await response.json();
+
+        if (data.error) alert(data.error.message);
+        else alert("You have successfully logged in!");
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       try {
         let response = await fetch(
@@ -30,10 +52,13 @@ const AuthForm = () => {
             }),
           }
         );
-        let data = response.json();
-        console.log(data);
+        setISLoding(false);
+        let data = await response.json();
+
+        if (data.error) alert(data.error.message);
+        else alert("You have successfully registred!");
       } catch (err) {
-        console.log(err.message, "Hello");
+        console.log(err, "Hello");
       }
     }
 
@@ -66,9 +91,13 @@ const AuthForm = () => {
           />
         </div>
         <div>
-          <button type="submit" className={classes.btn}>
-            Submit
-          </button>
+          {!isLoading ? (
+            <button type="submit" className={classes.btn}>
+              Submit
+            </button>
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
         <div className={classes.actions}>
           <button

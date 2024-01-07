@@ -1,6 +1,5 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Products from "./components/Products";
 import NavbarList from "./components/NavbarList";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
@@ -11,6 +10,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Store from "./pages/Store";
 import Contact from "./pages/Contact";
+import Product from "./pages/Product";
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -21,9 +21,10 @@ function App() {
         <NavbarList cart={setShowCart} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/store" element={<Store />} />
+          <Route path="/store" element={<Store />} exact />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/store/:id" element={<Product />} />
         </Routes>
 
         {/* <div className="header">The Generics</div>

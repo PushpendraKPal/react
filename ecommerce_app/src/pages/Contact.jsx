@@ -10,6 +10,10 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!name || !number || !email) {
+      return alert("Fill the all fields.");
+    }
+
     const respopnse = await fetch(
       "https://ecom-app-4e9ce-default-rtdb.firebaseio.com/users.json",
       {

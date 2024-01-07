@@ -1,21 +1,23 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 
-import Layout from './components/Layout/Layout';
-import UserProfile from './components/Profile/UserProfile';
-import AuthPage from './pages/AuthPage';
-import HomePage from './pages/HomePage';
+import Layout from "./components/Layout/Layout";
+import UserProfile from "./components/Profile/UserProfile";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
+import AuthCxt from "./store/authContext";
 
 function App() {
+  const { isLoggedIn } = AuthCxt();
   return (
     <Layout>
       <Switch>
-        <Route path='/' exact>
-          <HomePage />
+        <Route path="/" exact>
+          {isLoggedIn ? <HomePage /> : <AuthPage />}
         </Route>
-        <Route path='/auth'>
+        <Route path="/auth">
           <AuthPage />
         </Route>
-        <Route path='/profile'>
+        <Route path="/profile">
           <UserProfile />
         </Route>
       </Switch>

@@ -36,10 +36,10 @@ const AuthForm = () => {
         );
         setISLoding(false);
         let data = await response.json();
-
+        console.log(data);
         if (data.error) alert(data.error.message);
         else alert("You have successfully logged in!");
-        login(data.idToken);
+        login(data);
       } catch (err) {
         console.log(err);
       }

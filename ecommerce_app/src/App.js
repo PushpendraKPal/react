@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Store from "./pages/Store";
 import Contact from "./pages/Contact";
 import Product from "./pages/Product";
+import Login from "./pages/Login";
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -25,6 +26,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/store/:id" element={<Product />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
 
         {/* <div className="header">The Generics</div>

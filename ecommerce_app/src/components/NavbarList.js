@@ -27,8 +27,11 @@ const NavbarList = ({ cart }) => {
             <Link className="link" to={"/about"}>
               ABOUT
             </Link>
+            <Link className="link" to={"/login"}>
+              LOGIN
+            </Link>
             <Link className="link" to={"/contact"}>
-              CONTACT
+              CONTACTs
             </Link>
           </Nav>
         </Container>

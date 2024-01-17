@@ -7,31 +7,44 @@ const inetialState = {
   logout: () => {},
 };
 
+// const getLocal = (setToken, setUserLoggedIn) => {
+//   const tokenLocal = localStorage.getItem("token");
+//   if (tokenLocal) {
+//     setToken(tokenLocal);
+//     setUserLoggedIn(true);
+//   }
+// };
+
 const AuthContext = createContext(inetialState);
 
 export const AuthContextProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  console.log("Hello");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [userLoggedIn, setUserLoggedIn] = useState(
+    token == "null" ? false : true
+  );
+
   const loginHandler = (data) => {
-    setUserLoggedIn(!!data.idToken);
-    setUserId(data.localId);
     setToken(data.idToken);
+    setUserLoggedIn(!!data.idToken);
+    localStorage.setItem("token", JSON.stringify(data.idToken));
+    localStorage.setItem("logged", true);
+    //console.log(userLoggedIn, "loggedin");
   };
   const logoutHandler = () => {
     setUserLoggedIn(false);
-    setUserId(null);
     setToken(null);
+    localStorage.setItem("token", null);
+    localStorage.setItem("logged", false);
   };
 
   const contextValue = {
     token: token,
     isLoggedIn: userLoggedIn,
-    user: userId,
     login: loginHandler,
     logout: logoutHandler,
   };
-  useEffect(() => {}, [token]);
+  console.log(contextValue);
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );

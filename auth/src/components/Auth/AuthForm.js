@@ -37,7 +37,7 @@ const AuthForm = () => {
         setISLoding(false);
         let data = await response.json();
         console.log(data);
-        if (data.error) alert(data.error.message);
+        if (data.error) return alert(data.error.message);
         else alert("You have successfully logged in!");
         login(data);
       } catch (err) {

@@ -7,14 +7,15 @@ import HomePage from "./pages/HomePage";
 import AuthCxt from "./store/authContext";
 
 function App() {
-  const { isLoggedIn } = AuthCxt();
+  const { isLoggedIn, token } = AuthCxt();
   return (
     <Layout>
+      {console.log(isLoggedIn, token)}
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <HomePage /> : <AuthPage />}
         </Route>
-        <Route path="/auth">{isLoggedIn ? <HomePage /> : <AuthPage />}</Route>
+        <Route path="/auth">{<AuthPage />}</Route>
         <Route path="/profile">
           {isLoggedIn ? <UserProfile /> : <AuthPage />}
         </Route>

@@ -29,7 +29,10 @@ export const AuthContextProvider = ({ children }) => {
     setUserLoggedIn(!!data.idToken);
     localStorage.setItem("token", JSON.stringify(data.idToken));
     localStorage.setItem("logged", true);
-    //console.log(userLoggedIn, "loggedin");
+    setTimeout(() => {
+      localStorage.setItem("token", null);
+      localStorage.setItem("logged", false);
+    });
   };
   const logoutHandler = () => {
     setUserLoggedIn(false);

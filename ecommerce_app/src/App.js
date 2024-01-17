@@ -12,9 +12,11 @@ import Store from "./pages/Store";
 import Contact from "./pages/Contact";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
+import AuthCxt from "./context/AuthContext";
 
 function App() {
   const [showCart, setShowCart] = useState(false);
+  const { isLoggedIn } = AuthCxt();
   return (
     <Context>
       <div className="App">
@@ -22,7 +24,11 @@ function App() {
         <NavbarList cart={setShowCart} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/store" element={<Store />} exact />
+          <Route
+            path="/store"
+            element={isLoggedIn ? <Store /> : <Login />}
+            exact
+          />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/store/:id" element={<Product />} />

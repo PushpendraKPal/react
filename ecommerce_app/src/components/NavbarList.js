@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import "../App.css";
 import { AppState } from "../context/Context";
 import { Link } from "react-router-dom";
+import AuthCxt from "../context/AuthContext";
 
 const NavbarList = ({ cart }) => {
   const { state } = AppState();
@@ -12,6 +13,8 @@ const NavbarList = ({ cart }) => {
   function handleClick() {
     cart((prev) => !prev);
   }
+
+  const { isLoggedIn } = AuthCxt();
 
   return (
     <>
@@ -27,11 +30,11 @@ const NavbarList = ({ cart }) => {
             <Link className="link" to={"/about"}>
               ABOUT
             </Link>
-            <Link className="link" to={"/login"}>
-              LOGIN
-            </Link>
             <Link className="link" to={"/contact"}>
-              CONTACTs
+              CONTACT
+            </Link>
+            <Link className="link" to={"/login"}>
+              {isLoggedIn ? "LOGOUT" : "LOGIN"}
             </Link>
           </Nav>
         </Container>

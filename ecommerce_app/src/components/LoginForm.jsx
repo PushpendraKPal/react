@@ -41,7 +41,7 @@ const LoginForm = () => {
         console.log(data);
         if (data.error) return alert(data.error.message);
         else {
-          alert("You have successfully logged in!");
+          //alert("You have successfully logged in!");
           login(data);
           navigate("/store");
         }

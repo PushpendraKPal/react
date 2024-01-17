@@ -1,11 +1,12 @@
 import { useState } from "react";
 import classes from "./ProfileForm.module.css";
 import AuthCxt from "../../store/authContext";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const ProfileForm = () => {
   const [newPass, setNewPass] = useState("");
   const { login, token } = AuthCxt();
+  const history = useHistory();
 
   const changePassHandler = async (e) => {
     e.preventDefault();
@@ -30,13 +31,12 @@ const ProfileForm = () => {
       console.log(data);
       if (data.error) alert(data.error.message);
       else alert("You have successfully changed the password!");
-      login(data.idToken);
+      login(data);
     } catch (err) {
       console.log(err);
     }
     setNewPass("");
-    return;
-    <Redirect to="/"></Redirect>;
+    history.replace("/");
   };
 
   return (

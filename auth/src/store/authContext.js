@@ -14,7 +14,7 @@ export const AuthContextProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const loginHandler = (data) => {
-    setUserLoggedIn(true);
+    setUserLoggedIn(!!data.idToken);
     setUserId(data.localId);
     setToken(data.idToken);
   };

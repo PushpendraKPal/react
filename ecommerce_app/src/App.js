@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
 import AuthCxt from "./context/AuthContext";
+import Logout from "./components/Logout";
 
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/store/:id" element={<Product />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
 
         {/* <div className="header">The Generics</div>

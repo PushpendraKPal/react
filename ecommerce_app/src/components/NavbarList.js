@@ -8,6 +8,7 @@ import AuthCxt from "../context/AuthContext";
 
 const NavbarList = ({ cart }) => {
   const { state } = AppState();
+  const { user } = AuthCxt();
   let items = state.cart.length;
 
   function handleClick() {
@@ -33,7 +34,7 @@ const NavbarList = ({ cart }) => {
             <Link className="link" to={"/contact"}>
               CONTACT
             </Link>
-            <Link className="link" to={"/login"}>
+            <Link className="link" to={isLoggedIn ? "/logout" : "/login"}>
               {isLoggedIn ? "LOGOUT" : "LOGIN"}
             </Link>
           </Nav>
@@ -42,6 +43,7 @@ const NavbarList = ({ cart }) => {
           className="cart_btn"
           onClick={handleClick}
         >{`Cart ${items}`}</button>
+        <button className="cart_btn">{user}</button>
       </Navbar>
     </>
   );

@@ -10,7 +10,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = AuthCxt();
+  const { login, setuser, token } = AuthCxt();
   const navigate = useNavigate();
 
   const switchAuthModeHandler = () => {
@@ -36,17 +36,20 @@ const LoginForm = () => {
             }),
           }
         );
+
         setISLoding(false);
         let data = await response.json();
-        console.log(data);
+        //console.log(data);
         if (data.error) return alert(data.error.message);
         else {
           //alert("You have successfully logged in!");
+          //user = email;
+          setuser(email);
           login(data);
           navigate("/store");
         }
       } catch (err) {
-        console.log(err);
+        //console.log(err);
       }
     } else {
       try {
@@ -63,7 +66,7 @@ const LoginForm = () => {
         );
         setISLoding(false);
         let data = await response.json();
-
+        setuser(email);
         setEmail("");
         setPassword("");
 
@@ -73,7 +76,7 @@ const LoginForm = () => {
           return navigate("/store");
         }
       } catch (err) {
-        console.log(err, "Hello");
+        //console.log(err, "Hello");
       }
     }
   };

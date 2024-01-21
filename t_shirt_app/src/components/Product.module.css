@@ -1,0 +1,10 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 1fr 3fr;
+  text-align: left;
+  margin-bottom: 15px;
+}
+.btncontainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

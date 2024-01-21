@@ -1,5 +1,9 @@
 import style from "./Product.module.css";
+
 const Product = ({ item }) => {
+  const largeHandler = () => {};
+  const mediumHandler = () => {};
+  const smallHandler = () => {};
   return (
     <div className={style.container}>
       <div>{item.name}</div>
@@ -7,9 +11,9 @@ const Product = ({ item }) => {
       <div>{item.description}</div>
       <div>{item.price}</div>
       <div className={style.btncontainer}>
-        <button>Large {item.large}</button>
-        <button>Medium {item.medium}</button>
-        <button>Small {item.small}</button>
+        <button onClick={largeHandler}>Large {item.large}</button>
+        <button onClick={mediumHandler}>Medium {item.medium}</button>
+        <button onClick={smallHandler}>Small {item.small}</button>
       </div>
     </div>
   );

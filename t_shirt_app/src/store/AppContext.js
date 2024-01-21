@@ -97,7 +97,7 @@ const clothingItems = [
 const AppContext = createContext();
 
 const inetialState = {
-  productList: clothingItems,
+  productList: [],
   cart: [],
 };
 

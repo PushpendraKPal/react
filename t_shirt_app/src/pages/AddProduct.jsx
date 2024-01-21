@@ -1,7 +1,10 @@
 import { useState } from "react";
 import style from "./addProduct.module.css";
+import { AppCxt } from "../store/AppContext";
 
 const AddProduct = () => {
+  const { state, dispatch } = AppCxt();
+
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [des, setDes] = useState("");
@@ -21,7 +24,7 @@ const AddProduct = () => {
       medium,
       small,
     };
-    console.log(product);
+    addProductApi(product);
     setInetial();
   };
 
@@ -33,6 +36,31 @@ const AddProduct = () => {
     setLarge("");
     setMedium("");
     setSmall("");
+  };
+
+  const addProductApi = (item) => {
+    fetch(
+      "https://crudcrud.com/api/82e5c187da7a449b8c655d816d50633a/products",
+      {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: "POST",
+        body: JSON.stringify(item),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        getProductsApi();
+      });
+  };
+
+  const getProductsApi = () => {
+    fetch("https://crudcrud.com/api/82e5c187da7a449b8c655d816d50633a/products")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return dispatch({ type: "ADD_PRODUCT", payload: data });
+      });
   };
 
   return (

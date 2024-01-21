@@ -1,7 +1,8 @@
-const appReducer = ({ type, payload }) => {
+const appReducer = (state, action) => {
+  const { type, payload } = action;
   switch (type) {
     case "ADD_PRODUCT": {
-      console.log("Added in Product", payload);
+      return { ...state, productList: payload };
     }
     case "ADD_TO_CART": {
       console.log("Added to cart", payload);

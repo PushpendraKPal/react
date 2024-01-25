@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { AuthCxt } from "../contaxt/authContext/AuthContext";
 
 const Signup = () => {
+  const { addUser, addToken, token, user } = AuthCxt();
+
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
@@ -25,7 +28,9 @@ const Signup = () => {
           );
 
           let data = await response.json();
-          console.log(data);
+          addToken(data.idToken);
+          addUser(mail);
+          //console.log(data);
           if (data.error) return alert(data.error.message);
           else {
             alert("You have successfully logged in!");
@@ -68,11 +73,19 @@ const Signup = () => {
     setMail("");
     setPassword("");
     setCnfPassword("");
+
+    console.log(token);
+
+    console.log(user);
+  };
+
+  const handleLogin = () => {
+    setLogin((pre) => !pre);
   };
 
   return (
     <div>
-      <div>SignUp</div>
+      <div>{login ? "Login" : "SignUp"}</div>
       <div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
@@ -97,21 +110,29 @@ const Signup = () => {
               />
             </div>
           </div>
-          <div>
-            <p>Password</p>
+          {login ? (
+            <div>Forget Password?</div>
+          ) : (
             <div>
-              <div></div>
-              <input
-                type="password"
-                value={cnfPassword}
-                onChange={(e) => setCnfPassword(e.target.value)}
-              />
+              <p> Confirm Password</p>
+              <div>
+                <div></div>
+                <input
+                  type="password"
+                  value={cnfPassword}
+                  onChange={(e) => setCnfPassword(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
+          )}
           <input type="submit" value={login ? "Login" : "SignUp"} />
         </form>
       </div>
-      <button>Already have an account, please login.</button>
+      <button onClick={handleLogin}>
+        {login
+          ? "Dont have account, SignUp here."
+          : "Already have an account, login here."}
+      </button>
     </div>
   );
 };

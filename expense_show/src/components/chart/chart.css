@@ -1,0 +1,28 @@
+.main_bar {
+  height: 100%;
+  width: 30px;
+  background-color: rgb(6, 107, 73);
+  align-content: end;
+  display: flex;
+  align-content: end;
+}
+
+.filled_bar {
+  width: 100%;
+  background-color: brown;
+}
+
+.bar_container {
+  height: 10rem;
+  border: 1px solid gray;
+  width: 800px;
+  margin: auto;
+  background-color: yellow;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+.bar {
+  height: 10rem;
+  width: 30px;
+}

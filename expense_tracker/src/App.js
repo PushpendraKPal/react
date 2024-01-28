@@ -6,6 +6,7 @@ import { AuthCxt } from "./contaxt/authContext/AuthContext";
 import { useEffect } from "react";
 import Welcome from "./pages/Welcome";
 import ProfileForm from "./pages/ProfileForm";
+import LogoutButton from "./components/LogoutBtn";
 
 function App() {
   const { user } = AuthCxt();
@@ -14,10 +15,13 @@ function App() {
     console.log("User Change");
   }, [user]);
   return (
-    <Routes>
-      <Route path="/" element={user !== "Login" ? <Welcome /> : <Signup />} />
-      <Route path="/profileForm" element={<ProfileForm />} />
-    </Routes>
+    <>
+      <LogoutButton />
+      <Routes>
+        <Route path="/" element={user !== "Login" ? <Welcome /> : <Signup />} />
+        <Route path="/profileForm" element={<ProfileForm />} />
+      </Routes>
+    </>
   );
 }
 

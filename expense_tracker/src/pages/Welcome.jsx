@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { AuthCxt } from "../contaxt/authContext/AuthContext";
+import AddExpense from "../components/AddExpense";
+import ShowExpense from "../components/ShowExpense";
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -40,6 +42,8 @@ const Welcome = () => {
         <button onClick={handleComplete}>complete now!</button>
       </p>
       <button onClick={handleVerifyMail}>Verify your email</button>
+      <AddExpense />
+      <ShowExpense />
     </div>
   );
 };

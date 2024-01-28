@@ -6,9 +6,10 @@ const AddExpense = () => {
   const [description, setDes] = useState("");
   const [category, setCategory] = useState("Food");
   const { state } = AppCxt();
-  console.log(state);
+  //console.log(state);
 
-  const handleAddExpense = () => {
+  const handleAddExpense = async () => {
+    let url = "https://expense-tracker-1bae2-default-rtdb.firebaseio.com/";
     let newExp = { amount, description, category };
     state.addExpense(newExp);
   };

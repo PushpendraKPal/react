@@ -6,16 +6,19 @@ const ShowExpense = () => {
   const [expense, setExpense] = useState([]);
   useEffect(() => {
     setExpense(state.expense);
-  }, [state.expense]);
+  }, [state]);
   return (
     <div>
-      {expense.map((e) => {
+      {
+        console.log(state)
+        /* {expense.map((e) => {
         return (
           <div>
             {e.amount}, {e.description}, {e.category}
           </div>
         );
-      })}
+      })} */
+      }
     </div>
   );
 };

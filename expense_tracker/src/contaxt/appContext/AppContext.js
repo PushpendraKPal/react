@@ -15,7 +15,7 @@ const AppContextProvider = ({ children }) => {
   };
   const [state, dispatch] = useReducer(AppReducer, inetialState);
 
-  console.log(state);
+  //console.log(state);
 
   return (
     <AppContext.Provider value={{ state }}>{children}</AppContext.Provider>

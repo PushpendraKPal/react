@@ -5,6 +5,7 @@ import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { AuthCxt } from "./contaxt/authContext/AuthContext";
 import { useEffect } from "react";
 import Welcome from "./pages/Welcome";
+import ProfileForm from "./pages/ProfileForm";
 
 function App() {
   const { user } = AuthCxt();
@@ -14,7 +15,8 @@ function App() {
   }, [user]);
   return (
     <Routes>
-      <Route path="/" element={!user ? <Welcome /> : <Signup />} />
+      <Route path="/" element={user !== "Login" ? <Welcome /> : <Signup />} />
+      <Route path="/profileForm" element={<ProfileForm />} />
     </Routes>
   );
 }

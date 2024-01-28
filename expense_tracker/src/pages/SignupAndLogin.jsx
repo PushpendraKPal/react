@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AuthCxt } from "../contaxt/authContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { addUser, addToken, token, user } = AuthCxt();
@@ -8,6 +9,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [login, setLogin] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +37,7 @@ const Signup = () => {
           if (data.error) return alert(data.error.message);
           else {
             alert("You have successfully logged in!");
+            navigate("/");
           }
         } catch (err) {
           //console.log(err);
@@ -74,9 +78,9 @@ const Signup = () => {
     setPassword("");
     setCnfPassword("");
 
-    console.log(token);
+    //console.log(token);
 
-    console.log(user);
+    //console.log(user);
   };
 
   const handleLogin = () => {
@@ -133,6 +137,7 @@ const Signup = () => {
           ? "Dont have account, SignUp here."
           : "Already have an account, login here."}
       </button>
+      <p>{user}</p>
     </div>
   );
 };

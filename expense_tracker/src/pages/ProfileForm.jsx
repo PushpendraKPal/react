@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthCxt } from "../contaxt/authContext/AuthContext";
 
@@ -8,6 +8,33 @@ const ProfileForm = () => {
 
   const [name, setName] = useState("");
   const [profileURL, setProfileURL] = useState("");
+
+  const getUserInfo = async () => {
+    try {
+      let response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyA0Q7-BgkEdY2M1RXH0W3uyrlRRqkrm5Gs",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            idToken: token,
+            returnSecureToken: true,
+          }),
+        }
+      );
+      let data = await response.json();
+      if (data.error) return alert(data.error.message);
+      else {
+        setName(data.users[0].displayName);
+        setProfileURL(data.users[0].photoUrl);
+        console.log("Current User", data.users[0].photoUrl);
+        //alert("You have successfully updated your profile!");
+      }
+    } catch (err) {
+      //console.log(err, "Hello");
+    }
+  };
+
+  //getUserInfo();
 
   const handleCancel = () => {
     navigate("/");
@@ -22,7 +49,7 @@ const ProfileForm = () => {
           method: "POST",
           body: JSON.stringify({
             idToken: token,
-            name: name,
+            displayName: name,
             photoUrl: profileURL,
             returnSecureToken: true,
           }),
@@ -38,6 +65,10 @@ const ProfileForm = () => {
       //console.log(err, "Hello");
     }
   };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <div>
       <div>

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Welcome from "./pages/Welcome";
 import ProfileForm from "./pages/ProfileForm";
 import LogoutButton from "./components/LogoutBtn";
+import ForgetPassword from "./pages/ForgetPassword";
 
 function App() {
   const { user } = AuthCxt();
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={user !== "Login" ? <Welcome /> : <Signup />} />
         <Route path="/profileForm" element={<ProfileForm />} />
+        <Route path="/forget" element={<ForgetPassword />} />
       </Routes>
     </>
   );

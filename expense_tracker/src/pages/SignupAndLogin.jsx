@@ -87,6 +87,10 @@ const Signup = () => {
     setLogin((pre) => !pre);
   };
 
+  const handleForget = () => {
+    navigate("/forget");
+  };
+
   return (
     <div>
       <div>{login ? "Login" : "SignUp"}</div>
@@ -115,7 +119,9 @@ const Signup = () => {
             </div>
           </div>
           {login ? (
-            <div>Forget Password?</div>
+            <div>
+              <button onClick={handleForget}>Forget Password?</button>
+            </div>
           ) : (
             <div>
               <p> Confirm Password</p>

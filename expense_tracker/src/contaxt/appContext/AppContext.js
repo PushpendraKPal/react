@@ -3,22 +3,23 @@ import AppReducer from "./AppReducer";
 
 const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
+  const [exp, setExp] = useState([]);
   const inetialState = {
     isLoading: false,
-    expense: [],
-    addExpense: (payload) => {
-      return dispatch({
-        type: "ADD_EXPENSE",
-        payload,
-      });
-    },
+    expense: exp,
   };
+  let setEx = (data) => {
+    setExp(data);
+  };
+
   const [state, dispatch] = useReducer(AppReducer, inetialState);
 
   //console.log(state);
 
   return (
-    <AppContext.Provider value={{ state }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ state, dispatch, setEx }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

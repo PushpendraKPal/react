@@ -3,15 +3,14 @@ import { AppCxt } from "../contaxt/appContext/AppContext";
 
 const ShowExpense = () => {
   const { state } = AppCxt();
-  const [expense, setExpense] = useState([]);
+  console.log(state);
   useEffect(() => {
-    setExpense(state.expense);
+    console.log("Effect");
   }, [state]);
   return (
     <div>
       {
-        console.log(state)
-        /* {expense.map((e) => {
+        console.log(state.expense) /* {state.expense.map((e) => {
         return (
           <div>
             {e.amount}, {e.description}, {e.category}

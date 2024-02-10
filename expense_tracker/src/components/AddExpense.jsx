@@ -1,17 +1,19 @@
 import { useState } from "react";
+import { addOneExpense, getAllExpense } from "../crud";
 import { AppCxt } from "../contaxt/appContext/AppContext";
 
 const AddExpense = () => {
   const [amount, setAmount] = useState("");
   const [description, setDes] = useState("");
   const [category, setCategory] = useState("Food");
-  const { state } = AppCxt();
-  //console.log(state);
+
+  const { state, dispatch } = AppCxt();
 
   const handleAddExpense = async () => {
-    let url = "https://expense-tracker-1bae2-default-rtdb.firebaseio.com/";
+    //let url = "https://expense-tracker-1bae2-default-rtdb.firebaseio.com/";
     let newExp = { amount, description, category };
-    state.addExpense(newExp);
+    dispatch({ type: "ADD_EXPENSE", payload: newExp });
+    console.log("Trying to add");
   };
 
   return (

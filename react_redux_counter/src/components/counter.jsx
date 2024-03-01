@@ -6,21 +6,21 @@ const Counter = () => {
 
   const dispatch = useDispatch();
 
-  const handleIncrement = () => {
-    return dispatch({ type: "INCREMENT_BY_5" });
+  const handleIncrement = (amount) => {
+    return dispatch({ type: "INCREMENT", payload: amount });
   };
 
-  const handleDecrement = () => {
-    return dispatch({ type: "DECREMENT_BY_5" });
+  const handleDecrement = (amount) => {
+    return dispatch({ type: "DECREMENT", payload: amount });
   };
 
   return (
     <div className="container">
       <div>Counter</div>
       <br></br>
-      <button onClick={handleIncrement}>Increment By 5</button>
+      <button onClick={() => handleIncrement(5)}>Increment By 5</button>
       <div className="counter">{counter}</div>
-      <button onClick={handleDecrement}>Decrement By 5</button>
+      <button onClick={() => handleDecrement(5)}>Decrement By 5</button>
     </div>
   );
 };

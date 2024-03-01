@@ -5,9 +5,27 @@ const redux = require("redux");
 // Reducer Function
 
 const counterReducer = (state = { counter: 0 }, action) => {
-  if (action.type === "increment") return { counter: state.counter + 5 };
-  if (action.type === "decrement") return { counter: state.counter - 5 };
-  else return state;
+  switch (action.type) {
+    case "increment": {
+      return { counter: state.counter + 5 };
+    }
+
+    case "decrement": {
+      return { counter: state.counter - 5 };
+    }
+
+    case "INCREMENT_BY_2": {
+      return { counter: state.counter + 2 };
+    }
+
+    case "DECREMENT_BY_2": {
+      return { counter: state.counter - 2 };
+    }
+
+    default: {
+      return state;
+    }
+  }
 };
 
 // Create Store
@@ -31,4 +49,8 @@ store.dispatch({ type: "increment" });
 
 store.dispatch({ type: "increment" });
 
-store.dispatch({ type: "decrement" });
+store.dispatch({ type: "INCREMENT_BY_2" });
+
+store.dispatch({ type: "INCREMENT_BY_2" });
+
+store.dispatch({ type: "DECREMENT_BY_2" });

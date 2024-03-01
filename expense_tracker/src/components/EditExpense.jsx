@@ -1,38 +1,45 @@
 import { useState } from "react";
 import { AppCxt } from "../contaxt/appContext/AppContext";
 import { addExpense } from "./crud";
+import { editExpense } from "./crud";
 
-const AddExpense = () => {
-  const [amount, setAmount] = useState("");
-  const [description, setDes] = useState("");
-  const [category, setCategory] = useState("");
+const EditExpense = ({ e, setEdit }) => {
+  const [amount, setAmount] = useState(e.amount);
+  const [description, setDes] = useState(e.description);
+  const [category, setCategory] = useState(e.category);
 
   const { exp, setExp } = AppCxt();
 
-  const handleAddExpense = async () => {
-    let data = await addExpense({ amount, description, category });
+  const handleEditExpense = async (e) => {
+    let data = await editExpense({
+      amount,
+      description,
+      category,
+      id: e.id,
+    });
     setExp(data);
-    setAmount("");
-    setDes("");
-    setCategory("");
+    setEdit(false);
   };
 
   return (
-    <div>
-      <h2>Add Expense</h2>
-      <div>
+    <tr>
+      <td>
         <input
           type="text"
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
+      </td>
+      <td>
         <input
           type="text"
           placeholder="Description"
           value={description}
           onChange={(e) => setDes(e.target.value)}
         />
+      </td>
+      <td>
         <select
           name="category"
           onChange={(e) => {
@@ -47,10 +54,10 @@ const AddExpense = () => {
           <option value="Fair">Fair</option>
           <option value="Rent">Rent</option>
         </select>
-        <button onClick={handleAddExpense}>Add</button>
-      </div>
-    </div>
+      </td>
+      <button onClick={() => handleEditExpense(e)}>Save</button>
+    </tr>
   );
 };
 
-export default AddExpense;
+export default EditExpense;

@@ -8,6 +8,7 @@ import Welcome from "./pages/Welcome";
 import ProfileForm from "./pages/ProfileForm";
 import LogoutButton from "./components/LogoutBtn";
 import ForgetPassword from "./pages/ForgetPassword";
+import ShowExpense from "./components/ShowExpense";
 
 function App() {
   const { user } = AuthCxt();

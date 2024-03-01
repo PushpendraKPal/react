@@ -1,23 +1,12 @@
-import { createContext, useContext, useReducer, useState } from "react";
-import AppReducer from "./AppReducer";
+import { createContext, useContext, useState } from "react";
 
 const AppContext = createContext();
+
 const AppContextProvider = ({ children }) => {
   const [exp, setExp] = useState([]);
-  const inetialState = {
-    isLoading: false,
-    expense: exp,
-  };
-  let setEx = (data) => {
-    setExp(data);
-  };
-
-  const [state, dispatch] = useReducer(AppReducer, inetialState);
-
-  //console.log(state);
 
   return (
-    <AppContext.Provider value={{ state, dispatch, setEx }}>
+    <AppContext.Provider value={{ exp, setExp }}>
       {children}
     </AppContext.Provider>
   );

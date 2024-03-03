@@ -3,14 +3,14 @@ import "./App.css";
 import { useSelector } from "react-redux";
 import Store from "./components/Store";
 import Cart from "./components/Cart";
-import ShowCart from "./components/ShowCart.Jsx";
+import Header from "./components/Header";
 
 function App() {
   const show = useSelector((state) => state.cart.show);
   return (
     <div className="App">
-      <ShowCart />
-      <Cart />
+      <Header />
+      {show && <Cart />}
       <Store />
     </div>
   );

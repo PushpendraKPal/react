@@ -59,3 +59,19 @@
   display: flex;
   justify-content: space-between;
 }
+.h_container {
+  padding: 20px;
+  background-color: #282c34;
+  color: white;
+  font-weight: bold;
+}
+
+.h_container button {
+  padding: 0 20px 0 20px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+button {
+  cursor: pointer;
+}

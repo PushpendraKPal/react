@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { AuthCxt } from "../contaxt/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../store/store";
 
-const Signup = () => {
-  const { addUser, addToken, token, user } = AuthCxt();
-
+const SignupAndLogin = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== "" && mail !== "") {
+      // Login --------------------------------------------
+
       if (login) {
         try {
           let response = await fetch(
@@ -31,19 +34,31 @@ const Signup = () => {
           );
 
           let data = await response.json();
-          addToken(data.idToken);
-          addUser(mail);
-          //console.log(data);
+
           if (data.error) return alert(data.error.message);
           else {
-            alert("You have successfully logged in!");
+            console.log(data);
+            if (!data.displayName) data.displayName = "";
+            dispatch(
+              AuthActions.login({
+                token: data.idToken,
+                userId: data.localId,
+                email: data.email,
+                name: data.displayName,
+                url: data.profilePicture,
+              })
+            );
             navigate("/");
           }
         } catch (err) {
           //console.log(err);
         }
         //console.log("Login");
-      } else {
+      }
+
+      // Signup -----------------------------------------------
+      //
+      else {
         if (password === cnfPassword) {
           //console.log("Signup");
           try {
@@ -61,7 +76,14 @@ const Signup = () => {
             let data = await response.json();
             if (data.error) return alert(data.error.message);
             else {
-              alert("You have successfully registred!");
+              dispatch(
+                AuthActions.signup({
+                  token: data.idToken,
+                  userId: data.localId,
+                  email: data.email,
+                })
+              );
+              navigate("/");
             }
           } catch (err) {
             //console.log(err, "Hello");
@@ -79,8 +101,6 @@ const Signup = () => {
     setCnfPassword("");
 
     //console.log(token);
-
-    //console.log(user);
   };
 
   const handleLogin = () => {
@@ -92,7 +112,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="signup_container">
       <div>{login ? "Login" : "SignUp"}</div>
       <div>
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -120,7 +140,10 @@ const Signup = () => {
           </div>
           {login ? (
             <div>
-              <button onClick={handleForget}>Forget Password?</button>
+              <br />
+              <button className="forget_btn" onClick={handleForget}>
+                Forget Password?
+              </button>
             </div>
           ) : (
             <div>
@@ -135,17 +158,18 @@ const Signup = () => {
               </div>
             </div>
           )}
+          <br />
           <input type="submit" value={login ? "Login" : "SignUp"} />
         </form>
       </div>
+      <br />
       <button onClick={handleLogin}>
         {login
           ? "Dont have account, SignUp here."
           : "Already have an account, login here."}
       </button>
-      <p>{user}</p>
     </div>
   );
 };
 
-export default Signup;
+export default SignupAndLogin;

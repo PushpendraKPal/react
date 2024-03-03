@@ -1,29 +1,44 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Signup from "./pages/SignupAndLogin";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-import { AuthCxt } from "./contaxt/authContext/AuthContext";
-import { useEffect } from "react";
-import Welcome from "./pages/Welcome";
 import ProfileForm from "./pages/ProfileForm";
-import LogoutButton from "./components/LogoutBtn";
 import ForgetPassword from "./pages/ForgetPassword";
+import store from "./store/store";
+import { useSelector } from "react-redux";
+import SignupAndLogin from "./pages/SignupAndLogin";
+import Header from "./components/Header";
+import IncompleteProfile from "./components/IncompleteProfile";
+import AddOneExpense from "./components/AddOneExpense";
 import ShowExpense from "./components/ShowExpense";
+import EmailVerification from "./components/EmailVerification";
 
 function App() {
-  const { user } = AuthCxt();
+  const token = useSelector((state) => state.auth.token);
+  const name = useSelector((state) => state.auth.name);
 
-  useEffect(() => {
-    console.log("User Change");
-  }, [user]);
   return (
     <>
-      <LogoutButton />
+      {console.log(store.getState())}
+      <Header />
       <Routes>
-        <Route path="/" element={user !== "Login" ? <Welcome /> : <Signup />} />
+        <Route
+          path="/"
+          element={
+            token ? (
+              name ? (
+                <AddOneExpense />
+              ) : (
+                <IncompleteProfile />
+              )
+            ) : (
+              <SignupAndLogin />
+            )
+          }
+        />
         <Route path="/profileForm" element={<ProfileForm />} />
         <Route path="/forget" element={<ForgetPassword />} />
       </Routes>
+      {token && <ShowExpense />}
+      <EmailVerification />
     </>
   );
 }

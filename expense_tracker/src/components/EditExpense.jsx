@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { AppCxt } from "../contaxt/appContext/AppContext";
-import { addExpense } from "./crud";
 import { editExpense } from "./crud";
+import { useDispatch, useSelector } from "react-redux";
+import { ExpenseActions } from "../store/store";
 
 const EditExpense = ({ e, setEdit }) => {
   const [amount, setAmount] = useState(e.amount);
   const [description, setDes] = useState(e.description);
   const [category, setCategory] = useState(e.category);
 
-  const { exp, setExp } = AppCxt();
+  const userId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
 
   const handleEditExpense = async (e) => {
     let data = await editExpense({
@@ -16,8 +17,9 @@ const EditExpense = ({ e, setEdit }) => {
       description,
       category,
       id: e.id,
+      userId,
     });
-    setExp(data);
+    dispatch(ExpenseActions.addExpense(data));
     setEdit(false);
   };
 

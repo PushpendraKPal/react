@@ -1,13 +1,10 @@
 import { useSelector } from "react-redux";
+import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-const Welcome = () => {
-  const navigate = useNavigate();
+const EmailVerification = () => {
   const token = useSelector((state) => state.auth.token);
-
-  const handleComplete = () => {
-    navigate("/profileForm");
-  };
+  const navigate = useNavigate();
 
   const handleVerifyMail = async () => {
     try {
@@ -23,25 +20,34 @@ const Welcome = () => {
         }
       );
       let data = await response.json();
+      console.log(data);
       if (data.error) return alert(data.error.message);
       else {
-        //alert("You have successfully registred!");
+        alert(
+          "We have send you the verification link on your registered email. Please click on that link to verify your email. after verification Please login again."
+        );
+        navigate("/");
         console.log(data);
       }
     } catch (err) {
       //console.log(err, "Hello");
     }
   };
+
   return (
-    <div>
-      Welcome to Expense Tracker App!
+    <div className="inProfile_container">
+      <p className="verify">VERIFY YOUR EMAIL ADDRESS</p>
+      <p>Welcome to Expense Tracker App!</p>
       <p>
-        Your profile is incomplete!{" "}
-        <button onClick={handleComplete}>complete now!</button>
+        Please click the button belowto confirm the email address and activate
+        your account.
       </p>
-      <button onClick={handleVerifyMail}>Verify your email</button>
+      <br />
+      <button className="header_btn" onClick={handleVerifyMail}>
+        CONFIRM EMAIL
+      </button>
     </div>
   );
 };
 
-export default Welcome;
+export default EmailVerification;

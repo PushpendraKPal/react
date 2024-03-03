@@ -1,39 +1,55 @@
-import { useEffect, useState } from "react";
-import { AppCxt } from "../contaxt/appContext/AppContext";
-import { getAllExpense, deleteExpense } from "./crud";
-import EditExpense from "./EditExpense";
+import { useEffect } from "react";
+import { getAllExpense } from "./crud";
 import Expense from "./Expense";
+import { useDispatch, useSelector } from "react-redux";
+import { ExpenseActions } from "../store/store";
+import "../App.css";
 
 const ShowExpense = () => {
-  const { exp, setExp } = AppCxt();
+  const exp = useSelector((state) => state.exp.expense);
+  const userId = useSelector((state) => state.auth.userId);
 
-  const handleDelete = async (id) => {
-    await deleteExpense(id);
-    let data = await getAllExpense();
-    setExp(data);
-  };
+  const dispatch = useDispatch();
+
+  const total = exp.reduce((t, e) => {
+    return t + +e.amount;
+  }, 0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      let data = await getAllExpense();
-      setExp(data);
+    const fetchData = async (userId) => {
+      console.log(userId);
+      let data = await getAllExpense(userId);
+      dispatch(ExpenseActions.addExpense(data));
     };
-
-    fetchData();
+    console.log("ShowExp_effect");
+    fetchData(userId);
   }, []);
   return (
-    <table>
-      <tbody>
-        <tr key={1}>
-          <th>Amount</th>
-          <th>Description</th>
-          <th>Category</th>
-        </tr>
-        {exp.map((e) => (
-          <Expense e={e} key={e.id} />
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <div className="quote premium">
+        {`Rs ${total}/- is your total expense`}
+        {total >= 10000 && (
+          <button className="header_btn pr_btn">Go For Premium</button>
+        )}
+        {total >= 10000 && "to unlock useful features."}
+      </div>
+      <div className="shexp_container">
+        <table>
+          <tbody>
+            <tr key={1}>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+            {exp.map((e) => (
+              <Expense e={e} key={e.id} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 export default ShowExpense;

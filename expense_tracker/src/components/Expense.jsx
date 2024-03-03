@@ -1,20 +1,22 @@
 import { useState } from "react";
-import { AppCxt } from "../contaxt/appContext/AppContext";
 import { getAllExpense, deleteExpense } from "./crud";
 import EditExpense from "./EditExpense";
+import { useDispatch, useSelector } from "react-redux";
+import { ExpenseActions } from "../store/store";
 
 const Expense = ({ e }) => {
-  const { exp, setExp } = AppCxt();
   const [edit, setEdit] = useState(false);
+
+  const userId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
 
   const handleEdit = () => {
     setEdit(true);
   };
 
-  const handleDelete = async (id) => {
-    await deleteExpense(id);
-    let data = await getAllExpense();
-    setExp(data);
+  const handleDelete = async (id, userId) => {
+    let data = await deleteExpense({ id, userId });
+    dispatch(ExpenseActions.addExpense(data));
   };
 
   return (
@@ -27,16 +29,19 @@ const Expense = ({ e }) => {
           <td>{e.description}</td>
           <td>{e.category}</td>
           <td>
-            <button onClick={handleEdit}>Edit</button>
+            <button className="sh_btn edit" onClick={handleEdit}>
+              Edit
+            </button>
           </td>
           <td>
-            <button
+            <span
+              className="sh_btn"
               onClick={() => {
-                handleDelete(e.id);
+                handleDelete(e.id, userId);
               }}
             >
               Delete
-            </button>
+            </span>
           </td>
         </tr>
       )}

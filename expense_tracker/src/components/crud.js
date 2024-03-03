@@ -2,9 +2,11 @@ const url = "https://expense-5b1cf-default-rtdb.firebaseio.com/expense.json";
 
 // Get all expenses
 
-export async function getAllExpense() {
+export async function getAllExpense(userId) {
   try {
-    let response = await fetch(url);
+    let response = await fetch(
+      `https://expense-5b1cf-default-rtdb.firebaseio.com/${userId}.json`
+    );
 
     let data = await response.json();
 
@@ -16,6 +18,7 @@ export async function getAllExpense() {
       arr.push(data[key]);
     }
     console.log(data);
+    arr = arr.reverse();
     return arr;
     //}
   } catch (err) {
@@ -26,17 +29,22 @@ export async function getAllExpense() {
 // Add Expense
 
 export async function addExpense(payload) {
+  const { amount, description, category, userId } = payload;
+
   try {
-    let response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
+    let response = await fetch(
+      `https://expense-5b1cf-default-rtdb.firebaseio.com/${userId}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify({ amount, description, category }),
+      }
+    );
 
     let data = await response.json();
 
     if (data.error) return alert(data.error.message);
     else {
-      return getAllExpense();
+      return getAllExpense(userId);
     }
   } catch (err) {
     console.log(err);
@@ -45,22 +53,18 @@ export async function addExpense(payload) {
 
 // Delete Expense
 
-export async function deleteExpense(id) {
-  console.log(id);
+export async function deleteExpense(payload) {
+  const { id, userId } = payload;
+  console.log(id, userId);
   try {
     let response = await fetch(
-      `https://expense-5b1cf-default-rtdb.firebaseio.com/expense/${id}.json`,
+      `https://expense-5b1cf-default-rtdb.firebaseio.com/${userId}/${id}.json`,
       {
         method: "DELETE",
       }
     );
 
-    let data = await response.json();
-
-    if (data.error) return alert(data.error.message);
-    else {
-      return getAllExpense();
-    }
+    return getAllExpense(userId);
   } catch (err) {
     console.log(err);
   }
@@ -69,12 +73,13 @@ export async function deleteExpense(id) {
 // Edit Expense
 
 export async function editExpense(payload) {
+  const { id, userId, amount, description, category } = payload;
   try {
     let response = await fetch(
-      `https://expense-5b1cf-default-rtdb.firebaseio.com/expense/${payload.id}.json`,
+      `https://expense-5b1cf-default-rtdb.firebaseio.com/${userId}/${id}.json`,
       {
         method: "PUT",
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ amount, description, category }),
       }
     );
 
@@ -82,7 +87,7 @@ export async function editExpense(payload) {
 
     if (data.error) return alert(data.error.message);
     else {
-      return getAllExpense();
+      return getAllExpense(userId);
     }
   } catch (err) {
     console.log(err);

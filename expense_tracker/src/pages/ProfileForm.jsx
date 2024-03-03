@@ -1,40 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthCxt } from "../contaxt/authContext/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import "../App.css";
+import { AuthActions } from "../store/store";
 
 const ProfileForm = () => {
   const navigate = useNavigate();
-  const { token, user } = AuthCxt();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const dName = useSelector((state) => state.auth.name);
 
-  const [name, setName] = useState("");
-  const [profileURL, setProfileURL] = useState("");
+  let image = useSelector((state) => state.auth.image);
+  if (!image) image = "https://rb.gy/gjs9fn";
 
-  const getUserInfo = async () => {
-    try {
-      let response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyA0Q7-BgkEdY2M1RXH0W3uyrlRRqkrm5Gs",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            idToken: token,
-            returnSecureToken: true,
-          }),
-        }
-      );
-      let data = await response.json();
-      if (data.error) return alert(data.error.message);
-      else {
-        setName(data.users[0].displayName);
-        setProfileURL(data.users[0].photoUrl);
-        console.log("Current User", data.users[0].photoUrl);
-        //alert("You have successfully updated your profile!");
-      }
-    } catch (err) {
-      //console.log(err, "Hello");
-    }
-  };
-
-  //getUserInfo();
+  const [name, setName] = useState(dName);
+  const [profileURL, setProfileURL] = useState(image);
 
   const handleCancel = () => {
     navigate("/");
@@ -58,46 +38,55 @@ const ProfileForm = () => {
       let data = await response.json();
       if (data.error) return alert(data.error.message);
       else {
-        console.log(data);
-        alert("You have successfully updated your profile!");
+        //console.log(data);
+        dispatch(
+          AuthActions.update({ name: data.displayName, url: data.photoUrl })
+        );
+        setName("");
+        setProfileURL("");
+        navigate("/");
       }
     } catch (err) {
       //console.log(err, "Hello");
     }
   };
-  useEffect(() => {
-    getUserInfo();
-  }, []);
 
   return (
-    <div>
-      <div>
-        <p>Winners never quite. Quiteers never wins</p>
-        <p>
-          Your profile is 64% completed. A complete Profile has higher chances
-          of landing a job. Complete now
-        </p>
-      </div>
+    <div className="pu_container">
       <form action="" onSubmit={(e) => submitHandler(e)}>
-        <h2>Contact Details</h2>
-        <button onClick={handleCancel}>Cancel</button>
-        <div>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        <div className="pu_input">
+          <div className="a_l">
+            <h2>Contact Details</h2>
+            <p className="a_l">Name</p>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <br />
+            <br />
+            <p className="a_l">Profile Photo URL</p>
+            <input
+              type="text"
+              value={profileURL}
+              onChange={(e) => setProfileURL(e.target.value)}
+            />
+            <br />
+            <br />
+            <div className="pu_btn_container">
+              <button onClick={handleCancel} className="header_btn pu_btn">
+                Cancel
+              </button>
+              <button type="submit" className="header_btn pu_btn">
+                Update
+              </button>
+            </div>
+          </div>
+          <div className="pu_image_container">
+            <img src={image} alt="Hello" />
+          </div>
         </div>
-        <div>
-          Profile Photo URL
-          <input
-            type="text"
-            value={profileURL}
-            onChange={(e) => setProfileURL(e.target.value)}
-          />
-        </div>
-        <button type="submit">Update</button>
+        <br />
       </form>
     </div>
   );

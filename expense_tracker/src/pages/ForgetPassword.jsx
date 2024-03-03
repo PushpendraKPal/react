@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
+  const theme = useSelector((state) => state.theme.theme);
+
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -30,7 +33,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="forget_div">
+    <div className={theme ? "forget_div" : "forget_div_dark"}>
       <div>
         <p>Enter email to set the new password.</p>
         <input

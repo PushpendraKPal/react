@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthActions } from "../store/store";
 
 const SignupAndLogin = () => {
@@ -12,6 +12,8 @@ const SignupAndLogin = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const theme = useSelector((state) => state.theme.theme);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -112,67 +114,78 @@ const SignupAndLogin = () => {
   };
 
   return (
-    <div className="signup_container">
-      <div className="su_heading">{login ? "LOGIN" : "SIGNUP"}</div>
-      <div>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            Email
+    <>
+      <div className={theme ? "signup_container" : "signup_container_dark"}>
+        <div className={theme ? "su_heading" : "su_heading_dark"}>
+          {login ? "LOGIN" : "SIGNUP"}
+        </div>
+        <div>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <div>
-              <div></div>
-              <input
-                type="text"
-                value={mail}
-                onChange={(e) => setMail(e.target.value)}
-              />
+              Email
+              <div>
+                <div></div>
+                <input
+                  type="text"
+                  value={mail}
+                  onChange={(e) => setMail(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            Password
             <div>
-              <div></div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          {!login && (
-            <div>
-              Confirm Password
+              Password
               <div>
                 <div></div>
                 <input
                   type="password"
-                  value={cnfPassword}
-                  onChange={(e) => setCnfPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
-          )}
-          <br />
-          <input
-            className="log_btn"
-            type="submit"
-            value={login ? "Login" : "SignUp"}
-          />
-          {login && (
-            <div>
-              <button className="forget_btn" onClick={handleForget}>
-                Forget Password?
-              </button>
-            </div>
-          )}
-        </form>
+
+            {!login && (
+              <div>
+                Confirm Password
+                <div>
+                  <div></div>
+                  <input
+                    type="password"
+                    value={cnfPassword}
+                    onChange={(e) => setCnfPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+            )}
+            <br />
+            <input
+              className={theme ? "log_btn" : "log_btn_dark"}
+              type="submit"
+              value={login ? "Login" : "SignUp"}
+            />
+            {login && (
+              <div>
+                <button
+                  className={theme ? "forget_btn" : "forget_btn_dark"}
+                  onClick={handleForget}
+                >
+                  Forget Password?
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
+        <button
+          onClick={handleLogin}
+          className={theme ? "forget_btn" : "forget_btn_dark"}
+        >
+          {login
+            ? "Dont have account, SignUp here."
+            : "Already have an account, login here."}
+        </button>
       </div>
-      <button onClick={handleLogin} className="forget_btn">
-        {login
-          ? "Dont have account, SignUp here."
-          : "Already have an account, login here."}
-      </button>
-    </div>
+      <div className={theme ? "body ex" : "body_dark ex"}></div>
+    </>
   );
 };
 

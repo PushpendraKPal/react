@@ -14,10 +14,10 @@ import EmailVerification from "./components/EmailVerification";
 function App() {
   const token = useSelector((state) => state.auth.token);
   const name = useSelector((state) => state.auth.name);
+  const theme = useSelector((state) => state.theme.theme);
 
   return (
-    <>
-      {console.log(store.getState())}
+    <div className={theme ? "body" : "body_dark"}>
       <Header />
       <Routes>
         <Route
@@ -37,12 +37,15 @@ function App() {
             )
           }
         />
-        <Route path="/profileForm" element={<ProfileForm />} />
+        <Route
+          path="/profileForm"
+          element={token ? <ProfileForm /> : <SignupAndLogin />}
+        />
         <Route path="/forget" element={<ForgetPassword />} />
       </Routes>
       {token && <ShowExpense />}
       {token && <EmailVerification />}
-    </>
+    </div>
   );
 }
 

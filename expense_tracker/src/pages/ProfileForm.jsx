@@ -9,6 +9,7 @@ const ProfileForm = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const dName = useSelector((state) => state.auth.name);
+  const theme = useSelector((state) => state.theme.theme);
 
   let image = useSelector((state) => state.auth.image);
   if (!image) image = "https://rb.gy/gjs9fn";
@@ -52,9 +53,9 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className="pu_container">
+    <div className={theme ? "pu_container" : "pu_container_dark"}>
       <form action="" onSubmit={(e) => submitHandler(e)}>
-        <div className="pu_input">
+        <div className={theme ? "pu_input" : "pu_input_dark"}>
           <div className="a_l">
             <h2>Contact Details</h2>
             <p className="a_l">Name</p>
@@ -73,16 +74,30 @@ const ProfileForm = () => {
             />
             <br />
             <br />
-            <div className="pu_btn_container">
-              <button onClick={handleCancel} className="header_btn pu_btn">
+            <div
+              className={theme ? "pu_btn_container" : "pu_btn_container_dark"}
+            >
+              <button
+                onClick={handleCancel}
+                className={
+                  theme ? "header_btn pu_btn" : "header_btn pu_btn_dark"
+                }
+              >
                 Cancel
               </button>
-              <button type="submit" className="header_btn pu_btn">
+              <button
+                type="submit"
+                className={
+                  theme ? "header_btn pu_btn" : "header_btn pu_btn_dark"
+                }
+              >
                 Update
               </button>
             </div>
           </div>
-          <div className="pu_image_container">
+          <div
+            className={theme ? "pu_image_container" : "pu_image_container_dark"}
+          >
             <img src={image} alt="Hello" />
           </div>
         </div>

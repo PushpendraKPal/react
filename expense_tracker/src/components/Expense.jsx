@@ -7,6 +7,7 @@ import { ExpenseActions } from "../store/store";
 const Expense = ({ e }) => {
   const [edit, setEdit] = useState(false);
 
+  const theme = useSelector((state) => state.theme.theme);
   const userId = useSelector((state) => state.auth.userId);
   const dispatch = useDispatch();
 
@@ -29,13 +30,16 @@ const Expense = ({ e }) => {
           <td>{e.description}</td>
           <td>{e.category}</td>
           <td>
-            <button className="sh_btn edit" onClick={handleEdit}>
+            <button
+              className={theme ? "sh_btn edit" : "sh_btn edit_dark"}
+              onClick={handleEdit}
+            >
               Edit
             </button>
           </td>
           <td>
             <span
-              className="sh_btn"
+              className={theme ? "sh_btn" : "sh_btn_btn"}
               onClick={() => {
                 handleDelete(e.id, userId);
               }}

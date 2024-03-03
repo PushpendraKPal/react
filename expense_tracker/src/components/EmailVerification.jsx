@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const EmailVerification = () => {
   const token = useSelector((state) => state.auth.token);
+  const theme = useSelector((state) => state.theme.theme);
   const navigate = useNavigate();
 
   const handleVerifyMail = async () => {
@@ -35,15 +36,20 @@ const EmailVerification = () => {
   };
 
   return (
-    <div className="inProfile_container">
-      <p className="verify">VERIFY YOUR EMAIL ADDRESS</p>
+    <div className={theme ? "inProfile_container" : "inProfile_container_dark"}>
+      <p className={theme ? "verify" : "verify_dark"}>
+        VERIFY YOUR EMAIL ADDRESS
+      </p>
       <p>Welcome to Expense Tracker App!</p>
       <p>
         Please click the button belowto confirm the email address and activate
         your account.
       </p>
       <br />
-      <button className="header_btn" onClick={handleVerifyMail}>
+      <button
+        className={theme ? "header_btn" : "header_btn_dark"}
+        onClick={handleVerifyMail}
+      >
         CONFIRM EMAIL
       </button>
     </div>

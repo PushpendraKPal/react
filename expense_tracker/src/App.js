@@ -27,7 +27,10 @@ function App() {
               name ? (
                 <AddOneExpense />
               ) : (
-                <IncompleteProfile />
+                <>
+                  <IncompleteProfile />
+                  <AddOneExpense />
+                </>
               )
             ) : (
               <SignupAndLogin />
@@ -38,7 +41,7 @@ function App() {
         <Route path="/forget" element={<ForgetPassword />} />
       </Routes>
       {token && <ShowExpense />}
-      <EmailVerification />
+      {token && <EmailVerification />}
     </>
   );
 }

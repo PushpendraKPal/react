@@ -9,6 +9,7 @@ const AddOneExpense = () => {
   const [description, setDes] = useState("");
   const [category, setCategory] = useState("");
 
+  const theme = useSelector((state) => state.theme.theme);
   const userId = useSelector((state) => state.auth.userId);
   let image = useSelector((state) => state.auth.image);
   if (!image) image = "https://rb.gy/gjs9fn";
@@ -28,11 +29,11 @@ const AddOneExpense = () => {
   };
 
   return (
-    <div className="pu_input add_one">
+    <div className={theme ? "pu_input add_one" : "pu_input add_one_dark"}>
       <div>
         <h2>Add New Expense</h2>
         <div>
-          <div className="add_one_data">
+          <div className={theme ? "add_one_data" : "add_one_data_dark"}>
             <span>Amount</span>
             <input
               type="number"
@@ -41,7 +42,7 @@ const AddOneExpense = () => {
               onChange={(e) => setAmount(e.target.value)}
             />
           </div>
-          <div className="add_one_data">
+          <div className={theme ? "add_one_data" : "add_one_data_dark"}>
             <span>Description</span>
             <input
               type="text"
@@ -50,7 +51,7 @@ const AddOneExpense = () => {
               onChange={(e) => setDes(e.target.value)}
             />
           </div>
-          <div className="add_one_data">
+          <div className={theme ? "add_one_data" : "add_one_data_dark"}>
             <span>Category</span>
             <select
               name="category"
@@ -71,12 +72,15 @@ const AddOneExpense = () => {
             </select>
           </div>
           <br />
-          <button onClick={handleAddExpense} className="add_one_btn">
+          <button
+            onClick={handleAddExpense}
+            className={theme ? "add_one_btn" : "add_one_btn_dark"}
+          >
             ADD
           </button>
         </div>
       </div>
-      <div className="pu_image_container">
+      <div className={theme ? "pu_image_container" : "pu_image_container_dark"}>
         <img src={image} alt="Hello" />
       </div>
     </div>

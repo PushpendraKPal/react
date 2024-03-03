@@ -113,11 +113,11 @@ const SignupAndLogin = () => {
 
   return (
     <div className="signup_container">
-      <div>{login ? "Login" : "SignUp"}</div>
+      <div className="su_heading">{login ? "LOGIN" : "SIGNUP"}</div>
       <div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div>
-            <p>Email</p>
+            Email
             <div>
               <div></div>
               <input
@@ -128,7 +128,7 @@ const SignupAndLogin = () => {
             </div>
           </div>
           <div>
-            <p>Password</p>
+            Password
             <div>
               <div></div>
               <input
@@ -138,16 +138,10 @@ const SignupAndLogin = () => {
               />
             </div>
           </div>
-          {login ? (
+
+          {!login && (
             <div>
-              <br />
-              <button className="forget_btn" onClick={handleForget}>
-                Forget Password?
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p> Confirm Password</p>
+              Confirm Password
               <div>
                 <div></div>
                 <input
@@ -159,11 +153,21 @@ const SignupAndLogin = () => {
             </div>
           )}
           <br />
-          <input type="submit" value={login ? "Login" : "SignUp"} />
+          <input
+            className="log_btn"
+            type="submit"
+            value={login ? "Login" : "SignUp"}
+          />
+          {login && (
+            <div>
+              <button className="forget_btn" onClick={handleForget}>
+                Forget Password?
+              </button>
+            </div>
+          )}
         </form>
       </div>
-      <br />
-      <button onClick={handleLogin}>
+      <button onClick={handleLogin} className="forget_btn">
         {login
           ? "Dont have account, SignUp here."
           : "Already have an account, login here."}

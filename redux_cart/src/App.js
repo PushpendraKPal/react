@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Store from "./components/Store";
 import Cart from "./components/Cart";
 import Header from "./components/Header";
@@ -68,7 +68,7 @@ function App() {
         </p>
       </div>
       <Header />
-      {show && <Cart />}
+      <Cart setNotification={setNotification} />
       <Store />
     </div>
   );

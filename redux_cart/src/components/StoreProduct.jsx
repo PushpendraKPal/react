@@ -8,13 +8,19 @@ const StoreProduct = ({ e }) => {
   const handleBuy = (e) => {
     let arr = [...products];
     let flag = false;
+    let arr1 = [];
     for (let i = 0; i < arr.length; i++) {
-      if (e.id === arr[i].id) flag = true;
+      if (e.id === arr[i].id) {
+        flag = true;
+        arr1.push({ ...arr[i], qty: arr[i].qty + 1 });
+      } else {
+        arr1.push({ ...arr[i] });
+      }
     }
-    if (flag) return alert("Product is already in cart");
-    e.qty = 1;
-    arr.push({ ...e });
-    dispatch(cartSliceActions.setCart(arr));
+    if (!flag) {
+      arr1.push({ ...e, qty: 1 });
+    }
+    dispatch(cartSliceActions.setCart(arr1));
   };
 
   return (
@@ -24,7 +30,7 @@ const StoreProduct = ({ e }) => {
       <div className="sp_price">
         <span>{`Rs ${e.price}/-`}</span>
         <button className="sp_btn" onClick={() => handleBuy({ ...e })}>
-          Buy
+          Add To Cart
         </button>
       </div>
     </div>

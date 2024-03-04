@@ -5,12 +5,15 @@ import Store from "./components/Store";
 import Cart from "./components/Cart";
 import Header from "./components/Header";
 import { useEffect, useState } from "react";
+import { cartSliceActions } from "./store/store";
 
 function App() {
   const cart = useSelector((state) => state.cart.products);
 
   const [notification, setNotification] = useState("Pending");
+  const [initial, setInitial] = useState(false);
   const show = useSelector((state) => state.cart.show);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const sendCart = async (cart) => {
@@ -36,8 +39,34 @@ function App() {
         setNotification("Error");
       }
     };
-    sendCart(cart);
+
+    if (initial === 2) sendCart(cart);
+    if (initial === 1) setInitial(2);
   }, [cart]);
+
+  useEffect(() => {
+    const getCart = async () => {
+      try {
+        console.log("Hello Cart");
+        const getResponse = await fetch(
+          "https://reactcart-e848e-default-rtdb.firebaseio.com/cart.json"
+        );
+        let getData = await getResponse.json();
+        if (!getData) getData = [];
+        console.log(getData);
+        if (getData.err) {
+        } else {
+          console.log(getData);
+          dispatch(cartSliceActions.setCart(getData));
+          setInitial(1);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getCart();
+  }, []);
 
   return (
     <div className="App">

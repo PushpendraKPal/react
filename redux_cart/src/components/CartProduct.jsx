@@ -5,30 +5,26 @@ const CartProduct = ({ e }) => {
   let products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
 
-  const handleSub = (e) => {
+  const handleQuantityChange = ({ e, change }) => {
     let arr = [...products];
     let arr1 = [];
     let flag = false;
     for (let i = 0; i < arr.length; i++) {
       if (e.id === arr[i].id) {
-        if (e.qty > 1) {
-          e.qty = e.qty - 1;
+        if (change === "sub") {
+          if (e.qty > 1) {
+            e.qty = e.qty - 1;
+            arr1.push({ ...e });
+          } else {
+            continue;
+          }
+        } else {
+          e.qty = e.qty + 1;
           arr1.push({ ...e });
-        } else continue;
-      } else arr1.push({ ...arr[i] });
-    }
-    dispatch(cartSliceActions.setCart(arr1));
-  };
-
-  const handleAdd = (e) => {
-    let arr = [...products];
-    let arr1 = [];
-    let flag = false;
-    for (let i = 0; i < arr.length; i++) {
-      if (e.id === arr[i].id) {
-        e.qty = e.qty + 1;
-        arr1.push({ ...e });
-      } else arr1.push({ ...arr[i] });
+        }
+      } else {
+        arr1.push({ ...arr[i] });
+      }
     }
     dispatch(cartSliceActions.setCart(arr1));
   };
@@ -42,10 +38,16 @@ const CartProduct = ({ e }) => {
       <div className="sp_price">
         <span>{`X ${e.qty}`}</span>
         <div>
-          <button className="sp_btn" onClick={() => handleSub({ ...e })}>
+          <button
+            className="sp_btn"
+            onClick={() => handleQuantityChange({ e: { ...e }, change: "sub" })}
+          >
             -
           </button>
-          <button className="sp_btn" onClick={() => handleAdd({ ...e })}>
+          <button
+            className="sp_btn"
+            onClick={() => handleQuantityChange({ e: { ...e }, change: "add" })}
+          >
             +
           </button>
         </div>

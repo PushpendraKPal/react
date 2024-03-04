@@ -75,3 +75,27 @@
 button {
   cursor: pointer;
 }
+.pending {
+  display: none;
+}
+.sending {
+  background-color: rgb(173, 173, 255);
+  color: rgb(2, 2, 59);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+}
+.success {
+  background-color: rgb(153, 253, 166);
+  color: rgb(2, 46, 12);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+}
+.error {
+  background-color: rgb(255, 176, 173);
+  color: rgb(85, 11, 6);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+}

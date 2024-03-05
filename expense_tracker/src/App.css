@@ -466,3 +466,7 @@ tr_dark {
 th {
   padding: 15px;
 }
+
+.none {
+  display: none;
+}

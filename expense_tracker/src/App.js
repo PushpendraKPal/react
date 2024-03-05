@@ -45,6 +45,7 @@ function App() {
       </Routes>
       {token && <ShowExpense />}
       {token && <EmailVerification />}
+      <div className="none">Learn React</div>
     </div>
   );
 }

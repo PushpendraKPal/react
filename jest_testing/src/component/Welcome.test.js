@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Welcome from "./Welcome";
 import userEvent from "@testing-library/user-event";
 
@@ -23,14 +23,16 @@ test("Thanks message", () => {
   expect(textElement).toBeInTheDocument();
 });
 
-test("Thanks message", () => {
+test("Thanks message", async () => {
   render(<Welcome />);
 
   const buttonElement = screen.getByRole("button");
   userEvent.click(buttonElement);
 
-  const textElement = screen.queryByText("Thanks for joining Premium", {
-    exact: false,
+  await waitFor(() => {
+    const textElement = screen.queryByText("Thanks for joining Premium", {
+      exact: false,
+    });
+    expect(textElement).toBeInTheDocument();
   });
-  expect(textElement).not.toBeInTheDocument();
 });

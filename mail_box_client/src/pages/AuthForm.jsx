@@ -6,6 +6,8 @@ const AuthForm = () => {
   const [password, setPassword] = useState("");
   const [cnfPassword, setCnfPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,6 +21,9 @@ const AuthForm = () => {
       if (password === cnfPassword) {
         //console.log("Signup");
         try {
+          if (!email || !password || !cnfPassword) {
+            throw new Error("Please fill all the fields for signup");
+          }
           let response = await fetch(
             "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCDsKmRy9uKIl5cyHAFUJc5PCGyPCMqTvo",
             {
@@ -31,15 +36,20 @@ const AuthForm = () => {
             }
           );
           let data = await response.json();
-          if (data.error) return alert(data.error.message);
+          if (data.error)
+            throw new Error("Signup failed: Email already exists");
           else {
             console.log("User have Successfully SignedUp");
+            setError("");
+            setEmail("");
+            setPassword("");
+            setCnfPassword("");
           }
-        } catch (err) {
-          //console.log(err, "Hello");
+        } catch (error) {
+          setError(error.message);
         }
       } else {
-        return alert("Password does not matches");
+        setPasswordError("Passwords do not match");
       }
     }
   };
@@ -63,7 +73,7 @@ const AuthForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formBasicPassword" className="mt-3">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -73,29 +83,48 @@ const AuthForm = () => {
                   />
                 </Form.Group>
                 {!isLogin && (
-                  <Form.Group controlId="formBasicCnfPassword">
+                  <Form.Group
+                    controlId="formBasicConfirmfPassword"
+                    className="mt-3"
+                  >
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Password"
+                      placeholder="Confirm Password"
                       value={cnfPassword}
                       onChange={(e) => setCnfPassword(e.target.value)}
                     />
                   </Form.Group>
                 )}
-                <Button className="mt-3" variant="primary" type="submit" block>
-                  {isLogin ? "Log In" : "Sign Up"}
-                </Button>
+                {passwordError && (
+                  <p className="text-danger">{passwordError}</p>
+                )}
+                {error && <p className="text-danger">{error}</p>}
+
+                <Col className="text-right">
+                  <Button className={`mt-3`} variant="primary" type="submit">
+                    {isLogin ? "Log In" : "Sign Up"}
+                  </Button>
+                </Col>
               </Form>
-              <p className="text-center mt-3">
-                {isLogin
-                  ? "Don't have an account? "
-                  : "Already have an account? "}
-                <Button variant="link" onClick={() => setIsLogin(!isLogin)}>
-                  {isLogin ? "Sign Up" : "Log In"}
-                </Button>
+              <p
+                className="text-left mt-3"
+                onClick={() => setIsLogin((pre) => !pre)}
+              >
+                {isLogin ? (
+                  <span>
+                    Don't have an account?{" "}
+                    <span className="su_toogle">SignUp Here! </span>
+                  </span>
+                ) : (
+                  <span>
+                    Already have an account? <span>LogIn Here! </span>
+                  </span>
+                )}
               </p>
-              {isLogin && <p className="text-center">Forget Password?</p>}
+              {isLogin && (
+                <p className="text-left su_toogle">Forget Password?</p>
+              )}
             </Card.Body>
           </Card>
         </Col>

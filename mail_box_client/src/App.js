@@ -5,6 +5,7 @@ import AuthForm from "./pages/AuthForm";
 function App() {
   return (
     <div>
+      "Learn React"
       <AuthForm />
     </div>
   );

@@ -40,4 +40,9 @@
 .su_toogle {
   color: rgb(33, 33, 255);
   cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.su_toogle:active {
+  background-color: rgb(255, 184, 184);
 }

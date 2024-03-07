@@ -146,17 +146,19 @@ const AuthForm = () => {
                 {isLogin ? (
                   <span>
                     Don't have an account?{" "}
-                    <span className="su_toogle">SignUp Here! </span>
+                    <button className="su_toogle">SignUp Here! </button>
                   </span>
                 ) : (
                   <span>
                     Already have an account?{" "}
-                    <span className="su_toogle">LogIn Here! </span>
+                    <button className="su_toogle">LogIn Here! </button>
                   </span>
                 )}
               </p>
               {isLogin && (
-                <p className="text-left su_toogle">Forget Password?</p>
+                <button className="text-left su_toogle">
+                  Forget Password?
+                </button>
               )}
             </Card.Body>
           </Card>

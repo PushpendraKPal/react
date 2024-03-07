@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { authSliceActions } from "../store/store";
 
 const AuthForm = () => {
   const [email, setEmail] = useState("");
@@ -9,17 +11,47 @@ const AuthForm = () => {
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Login
 
     if (isLogin) {
+      try {
+        if (!email || !password) {
+          throw new Error("Please fill all the fields for signup");
+        }
+
+        let response = await fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCDsKmRy9uKIl5cyHAFUJc5PCGyPCMqTvo",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              password,
+              returnSecureToken: true,
+            }),
+          }
+        );
+        let data = await response.json();
+        if (data.error)
+          throw new Error("LogIn failed : If not have account please signup ");
+        else {
+          console.log(data);
+          dispatch(authSliceActions.login(data.idToken));
+          setError("");
+          setEmail("");
+          setPassword("");
+        }
+      } catch (error) {
+        setError(error.message);
+      }
     }
 
     // signup
     else {
       if (password === cnfPassword) {
-        //console.log("Signup");
         try {
           if (!email || !password || !cnfPassword) {
             throw new Error("Please fill all the fields for signup");
@@ -118,7 +150,8 @@ const AuthForm = () => {
                   </span>
                 ) : (
                   <span>
-                    Already have an account? <span>LogIn Here! </span>
+                    Already have an account?{" "}
+                    <span className="su_toogle">LogIn Here! </span>
                   </span>
                 )}
               </p>

@@ -1,10 +1,10 @@
-// Helping functions
+// Helping functions ----------------------------------------------------------------------------
 
 function objectToArrayWithIds(obj) {
   return Object.keys(obj).map((key) => ({ ...obj[key], id: key }));
 }
 
-// send email
+// send email -------------------------------------------------------------------------------------
 
 const url = "https://mailboxclient-45cc0-default-rtdb.firebaseio.com/";
 
@@ -25,7 +25,7 @@ export const sendMail = async (payload) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, from: from }),
+        body: JSON.stringify({ ...data, from: from, read: false }),
       }
     );
 
@@ -40,7 +40,7 @@ export const sendMail = async (payload) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...data, to: email }),
+        body: JSON.stringify({ ...data, to: email, read: false }),
       }
     );
 
@@ -52,7 +52,7 @@ export const sendMail = async (payload) => {
   }
 };
 
-// get emails
+// get emails -------------------------------------------------------------------------------
 
 export const getMails = async (email) => {
   const mail = removeDot(email);
@@ -62,6 +62,36 @@ export const getMails = async (email) => {
       `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}.json`,
       {
         method: "GET",
+      }
+    );
+
+    const resData = await response.json();
+    if (resData.error) throw new Error(resData.error);
+    console.log(resData);
+
+    const recieved = objectToArrayWithIds(resData.recieved).reverse();
+    const sent = objectToArrayWithIds(resData.sent).reverse();
+
+    return { recieved, sent };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Update  Received Email-----------------------------------------------------------------------------
+
+export const updateMail = async (email, e) => {
+  const mail = removeDot(email);
+
+  try {
+    const response = await fetch(
+      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}/recieved/${e.id}.json`,
+      {
+        method: "POST",
+        body: JSON.stringify({ ...e, read: true }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
 

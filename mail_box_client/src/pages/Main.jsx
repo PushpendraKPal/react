@@ -2,8 +2,16 @@ import React from "react";
 import Header from "../component/Header";
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import ShowAllMail from "../component/ShowAllMail";
+import { useDispatch, useSelector } from "react-redux";
+import { uiSliceActions } from "../store/store";
+import ShowCurrentMail from "../component/ShowCurrentMail";
 
 function Main() {
+  const readMode = useSelector((state) => state.ui.readMode);
+  const dispatch = useDispatch();
+  const handleInbox = () => {
+    dispatch(uiSliceActions.hideReadMode());
+  };
   return (
     <div>
       <Header />
@@ -17,7 +25,11 @@ function Main() {
             >
               <Button className="btn_compose">COMPOSE MAIL</Button>
               <nav className="nav flex-column">
-                <a className="nav-link active" href="#home">
+                <a
+                  className="nav-link active"
+                  href="#home"
+                  onClick={handleInbox}
+                >
                   Inbox
                 </a>
                 <a className="nav-link" href="#about">
@@ -35,7 +47,7 @@ function Main() {
             {/* Blog Editor */}
             <Col sm={9}>
               <Container className="mt-4">
-                <ShowAllMail />
+                {readMode ? <ShowCurrentMail /> : <ShowAllMail />}
               </Container>
             </Col>
           </Row>

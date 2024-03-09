@@ -9,6 +9,7 @@ function removeDot(email) {
 export const sendMail = async (payload) => {
   const { email, data, from } = payload;
   const mail = removeDot(email);
+  const fromEmail = removeDot(from);
   console.log("Sending getMails.....");
   try {
     const response = await fetch(
@@ -18,7 +19,7 @@ export const sendMail = async (payload) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, from: from }),
       }
     );
 
@@ -27,17 +28,17 @@ export const sendMail = async (payload) => {
     console.log(resData);
 
     const senderResponse = await fetch(
-      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${from}/send.json`,
+      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${fromEmail}/sent.json`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, to: email }),
       }
     );
 
-    const senderData = await response.json();
+    const senderData = await senderResponse.json();
     if (senderData.error) throw new Error(senderData.error);
     console.log(resData);
   } catch (error) {

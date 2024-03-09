@@ -21,6 +21,9 @@ const ComposeMail = ({ placeholder }) => {
       if (!subject) alert("Write subject of your composed mail");
       if (!value) alert("write body of your composed mail");
     }
+    setValue("");
+    setTo("");
+    setSubject("");
   };
 
   return (

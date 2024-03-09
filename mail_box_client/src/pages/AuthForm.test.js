@@ -3,7 +3,6 @@ import { render, fireEvent, waitFor } from "@testing-library/react";
 import AuthForm from "./AuthForm";
 import { Provider } from "react-redux";
 import store from "../store/store";
-import { Button } from "react-bootstrap";
 
 describe("AuthForm Component", () => {
   test("renders login form by default", () => {

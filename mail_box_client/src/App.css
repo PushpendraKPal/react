@@ -69,12 +69,49 @@
 }
 .btn_compose {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 24px;
 }
 
 .dot {
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
   background-color: rgb(106, 106, 253);
   margin-right: 10px;
   color: rgb(106, 106, 253);
+  margin-top: 7px;
+}
+.sam_heading {
+  padding: 20px 0px 20px 0px;
+  color: #0d6efd;
+  margin-top: 10px;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.sam_hcol {
+  padding: 15px;
+  font-size: 18px;
+  color: rgb(10, 10, 92);
+}
+.sam_col {
+  padding: 10px;
+  font-size: 16px;
+  color: rgb(12, 12, 141);
+  cursor: pointer;
+}
+.sam_row {
+  display: flex;
+}
+.sc_subject {
+  padding: 15px;
+  font-size: 18px;
+  color: rgb(94, 94, 94);
+  background-color: #e4e4e4;
+}
+.sub {
+  padding-left: 10px;
+  color: rgb(27, 27, 27);
+}
+.sc_body {
+  padding: 20px;
+  color: rgb(43, 43, 43);
 }

@@ -21,33 +21,41 @@ function ShowAllMail() {
   useEffect(() => {
     const getData = async (userEmail) => {
       console.log("Effect-ShowAll");
-      const data = await getMails(userEmail);
+      let data = await getMails(userEmail);
+      if (!data) data = [];
       dispatch(emailSliceActions.getMails(data));
     };
     getData(userEmail);
   }, []);
   return (
     <div>
-      <div>Show all mails</div>
+      <div className="sam_heading">Inbox</div>
       {console.log(rMails)}
       <div>
         <Row>
-          <Col sm={4}>Seder's E-mail</Col>
-          <Col sm={8}>Email-Subject</Col>
+          <Col sm={4} className="sam_hcol">
+            From
+          </Col>
+          <Col sm={8} className="sam_hcol">
+            Subject
+          </Col>
         </Row>
       </div>
       <div>
-        {rMails.map((e) => {
-          return (
-            <Row onClick={() => handleViewEmail(e)} key={e.id}>
-              <Col sm={4}>
-                <span className={e.id === false ? "dot" : ""}></span>
-                {e.from}
-              </Col>
-              <Col sm={8}>{e.subject}</Col>
-            </Row>
-          );
-        })}
+        {rMails &&
+          rMails.map((e) => {
+            return (
+              <Row onClick={() => handleViewEmail(e)} key={e.id}>
+                <Col sm={4} className="sam_col sam_row">
+                  <div className={e.read === false ? "dot" : ""}></div>
+                  <div>{e.from}</div>
+                </Col>
+                <Col sm={8} className="sam_col">
+                  {e.subject}
+                </Col>
+              </Row>
+            );
+          })}
       </div>
     </div>
   );

@@ -87,7 +87,7 @@ export const updateMail = async (email, e) => {
     const response = await fetch(
       `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}/recieved/${e.id}.json`,
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({ ...e, read: true }),
         headers: {
           "Content-Type": "application/json",

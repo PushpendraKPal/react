@@ -4,9 +4,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../App.css";
 import { sendMail } from "../actions/crudApis";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uiSliceActions } from "../store/store";
 
 const ComposeMail = ({ placeholder }) => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
   const userEmail = useSelector((state) => state.auth.email);
 
@@ -16,6 +18,8 @@ const ComposeMail = ({ placeholder }) => {
   const handleSend = () => {
     if (to || subject || value) {
       sendMail({ email: to, data: { subject, value }, from: userEmail });
+      dispatch(uiSliceActions.hideCompose());
+      dispatch(uiSliceActions.hideReadMode());
     } else {
       if (!to) alert("Enter recipent email");
       if (!subject) alert("Write subject of your composed mail");
@@ -60,7 +64,7 @@ const ComposeMail = ({ placeholder }) => {
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={handleSend}>
+        <Button variant="primary" onClick={handleSend} className="mt-3">
           Send
         </Button>
       </Form>

@@ -4,14 +4,22 @@ import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import ShowAllMail from "../component/ShowAllMail";
 import { useDispatch, useSelector } from "react-redux";
 import { uiSliceActions } from "../store/store";
+import ComposeMail from "./ComposeMail";
 import ShowCurrentMail from "../component/ShowCurrentMail";
 
 function Main() {
   const readMode = useSelector((state) => state.ui.readMode);
+  const compose = useSelector((state) => state.ui.compose);
   const dispatch = useDispatch();
   const handleInbox = () => {
     dispatch(uiSliceActions.hideReadMode());
+    dispatch(uiSliceActions.hideCompose());
   };
+
+  const handleCompose = () => {
+    dispatch(uiSliceActions.showCompose());
+  };
+
   return (
     <div>
       <Header />
@@ -23,7 +31,9 @@ function Main() {
               sm={3}
               style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}
             >
-              <Button className="btn_compose">COMPOSE MAIL</Button>
+              <Button className="btn_compose" onClick={handleCompose}>
+                COMPOSE MAIL
+              </Button>
               <nav className="nav flex-column">
                 <a
                   className="nav-link active"
@@ -47,7 +57,8 @@ function Main() {
             {/* Blog Editor */}
             <Col sm={9}>
               <Container className="mt-4">
-                {readMode ? <ShowCurrentMail /> : <ShowAllMail />}
+                {compose && <ComposeMail />}
+                {!compose && (readMode ? <ShowCurrentMail /> : <ShowAllMail />)}
               </Container>
             </Col>
           </Row>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function ShowCurrentMail() {
@@ -6,8 +6,8 @@ function ShowCurrentMail() {
   console.log("Called ShowCurrent");
   const stack = useSelector((state) => state.email.currentStack);
   const emailId = useSelector((state) => state.email.currentEmail);
-  const receivedEmails = useSelector((state) => state.email.recieved);
-  const sentEmails = useSelector((state) => state.email.sent);
+  let receivedEmails = useSelector((state) => state.email.recieved);
+  let sentEmails = useSelector((state) => state.email.sent);
 
   const getEmail = (emailId) => {
     let email = { from: "hello", subject: "hello", value: "hello" };
@@ -29,11 +29,18 @@ function ShowCurrentMail() {
 
   let reqEmail = getEmail(emailId);
 
+  useEffect(() => {
+    let p = document.getElementById("hi");
+    p.innerHTML = reqEmail.value;
+  }, []);
+
   return (
     <>
       <div>
-        <p>{reqEmail.subject}</p>
-        <p id="hi">{reqEmail.value}</p>
+        <p className="sc_subject">
+          Subject: <span className="sub">{reqEmail.subject}</span>
+        </p>
+        <p id="hi" className="sc_body"></p>
       </div>
     </>
   );

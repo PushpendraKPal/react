@@ -55,6 +55,7 @@ export const emailSliceActions = emailSlice.actions;
 
 const uiState = {
   readMode: false,
+  compose: false,
 };
 
 const uiSlice = createSlice({
@@ -66,6 +67,12 @@ const uiSlice = createSlice({
     },
     hideReadMode(state) {
       state.readMode = false;
+    },
+    showCompose(state) {
+      state.compose = true;
+    },
+    hideCompose(state) {
+      state.compose = false;
     },
   },
 });

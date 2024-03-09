@@ -1,3 +1,9 @@
+// Helping functions
+
+function objectToArrayWithIds(obj) {
+  return Object.keys(obj).map((key) => ({ ...obj[key], id: key }));
+}
+
 // send email
 
 const url = "https://mailboxclient-45cc0-default-rtdb.firebaseio.com/";
@@ -48,12 +54,12 @@ export const sendMail = async (payload) => {
 
 // get emails
 
-export const getMails = async (payload) => {
-  const { email } = payload;
+export const getMails = async (email) => {
+  const mail = removeDot(email);
 
   try {
     const response = await fetch(
-      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${email}.json`,
+      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}.json`,
       {
         method: "GET",
       }
@@ -62,6 +68,11 @@ export const getMails = async (payload) => {
     const resData = await response.json();
     if (resData.error) throw new Error(resData.error);
     console.log(resData);
+
+    const recieved = objectToArrayWithIds(resData.recieved).reverse();
+    const sent = objectToArrayWithIds(resData.sent).reverse();
+
+    return { recieved, sent };
   } catch (error) {
     console.log(error);
   }

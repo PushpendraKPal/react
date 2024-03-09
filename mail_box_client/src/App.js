@@ -1,18 +1,17 @@
-import { Button } from "react-bootstrap";
 import "./App.css";
 import AuthForm from "./pages/AuthForm";
-import Welcome from "./pages/Welcome";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
   return (
     <>
-      <div>Learn react</div>
+      <div className="d_none">Learn react</div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={token ? <Welcome /> : <AuthForm />} />
+          <Route path="/" element={token ? <Main /> : <AuthForm />} />
         </Routes>
       </BrowserRouter>
     </>

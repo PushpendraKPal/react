@@ -1,5 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
+// Auth Slice---------------------------------------------------------------------------
+
 const authState = {
   token: "",
   email: "",
@@ -21,8 +23,30 @@ const authSlice = createSlice({
 
 export const authSliceActions = authSlice.actions;
 
+// emails Slice -----------------------------------------------------------------------------------
+
+const emailState = {
+  recieved: [],
+  sent: [],
+};
+
+const emailSlice = createSlice({
+  initialState: emailState,
+  name: "Email",
+  reducers: {
+    getMails(state, action) {
+      state.recieved = action.payload.recieved;
+      state.sent = action.payload.sent;
+    },
+  },
+});
+
+export const emailSliceActions = emailSlice.actions;
+
+// Store ----------------------------------------------------------------------------------------------
+
 const store = configureStore({
-  reducer: { auth: authSlice.reducer },
+  reducer: { auth: authSlice.reducer, email: emailSlice.reducer },
 });
 
 export default store;

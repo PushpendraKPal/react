@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const authState = {
   token: "",
+  email: "",
 };
 
 const authSlice = createSlice({
@@ -9,7 +10,8 @@ const authSlice = createSlice({
   name: "Auth",
   reducers: {
     login(state, action) {
-      state.token = action.payload;
+      state.token = action.payload.token;
+      state.email = action.payload.email;
     },
     logout(state) {
       state.token = "";

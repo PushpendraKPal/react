@@ -46,3 +46,8 @@
 .su_toogle:active {
   background-color: rgb(255, 184, 184);
 }
+
+.editor {
+  min-height: 300px;
+  border: 1px solid gray;
+}

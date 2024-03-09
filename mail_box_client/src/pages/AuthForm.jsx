@@ -39,7 +39,9 @@ const AuthForm = () => {
           throw new Error("LogIn failed : If not have account please signup ");
         else {
           console.log(data);
-          dispatch(authSliceActions.login(data.idToken));
+          dispatch(
+            authSliceActions.login({ token: data.idToken, email: data.email })
+          );
           setError("");
           setEmail("");
           setPassword("");

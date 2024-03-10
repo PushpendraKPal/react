@@ -3,7 +3,7 @@ import Header from "../component/Header";
 import { Container, Col, Row, Button, Form } from "react-bootstrap";
 import ShowAllMail from "../component/ShowAllMail";
 import { useDispatch, useSelector } from "react-redux";
-import { uiSliceActions } from "../store/store";
+import { emailSliceActions, uiSliceActions } from "../store/store";
 import ComposeMail from "./ComposeMail";
 import ShowCurrentMail from "../component/ShowCurrentMail";
 
@@ -14,6 +14,7 @@ function Main() {
   const handleInbox = () => {
     dispatch(uiSliceActions.hideReadMode());
     dispatch(uiSliceActions.hideCompose());
+    dispatch(emailSliceActions.setCurrentStack("recieved"));
   };
 
   const handleCompose = () => {

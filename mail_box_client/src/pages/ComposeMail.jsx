@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import "../App.css";
 import { sendMail } from "../actions/crudApis";
 import { useDispatch, useSelector } from "react-redux";
-import { uiSliceActions } from "../store/store";
+import { emailSliceActions, uiSliceActions } from "../store/store";
 
 const ComposeMail = ({ placeholder }) => {
   const dispatch = useDispatch();
@@ -15,11 +15,17 @@ const ComposeMail = ({ placeholder }) => {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (to || subject || value) {
-      sendMail({ email: to, data: { subject, value }, from: userEmail });
+      const data = await sendMail({
+        email: to,
+        data: { subject, value },
+        from: userEmail,
+      });
+      dispatch(emailSliceActions.getMails(data));
       dispatch(uiSliceActions.hideCompose());
       dispatch(uiSliceActions.hideReadMode());
+      dispatch(emailSliceActions.setCurrentStack("recieved"));
     } else {
       if (!to) alert("Enter recipent email");
       if (!subject) alert("Write subject of your composed mail");

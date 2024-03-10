@@ -29,7 +29,7 @@ const emailState = {
   recieved: [],
   sent: [],
   currentEmail: "",
-  currentStack: "",
+  currentStack: "recieved",
 };
 
 const emailSlice = createSlice({

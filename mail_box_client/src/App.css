@@ -73,12 +73,9 @@
 }
 
 .dot {
-  width: 10px;
-  height: 10px;
-  background-color: rgb(106, 106, 253);
+  border: solid #0d6efd 7px;
+  border-radius: 50%;
   margin-right: 10px;
-  color: rgb(106, 106, 253);
-  margin-top: 7px;
 }
 .sam_heading {
   padding: 20px 0px 20px 0px;
@@ -93,7 +90,7 @@
   color: rgb(10, 10, 92);
 }
 .sam_col {
-  padding: 10px;
+  align-items: center;
   font-size: 16px;
   color: rgb(12, 12, 141);
   cursor: pointer;
@@ -106,6 +103,7 @@
   font-size: 18px;
   color: rgb(94, 94, 94);
   background-color: #e4e4e4;
+  justify-items: center;
 }
 .sub {
   padding-left: 10px;
@@ -114,4 +112,15 @@
 .sc_body {
   padding: 20px;
   color: rgb(43, 43, 43);
+}
+.sam_del {
+  display: flex;
+  justify-content: space-between;
+}
+.del_btn {
+  height: 40px;
+}
+.show_email {
+  border: solid 1px rgb(201, 201, 201);
+  margin-bottom: 10px;
 }

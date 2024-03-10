@@ -4,13 +4,13 @@ function objectToArrayWithIds(obj) {
   return Object.keys(obj).map((key) => ({ ...obj[key], id: key }));
 }
 
-// send email -------------------------------------------------------------------------------------
-
-const url = "https://mailboxclient-45cc0-default-rtdb.firebaseio.com/";
-
 function removeDot(email) {
   return email.replace(/\./g, "");
 }
+
+const url = "https://mailboxclient-45cc0-default-rtdb.firebaseio.com/";
+
+// send email -------------------------------------------------------------------------------------
 
 export const sendMail = async (payload) => {
   const { email, data, from } = payload;
@@ -46,7 +46,7 @@ export const sendMail = async (payload) => {
 
     const senderData = await senderResponse.json();
     if (senderData.error) throw new Error(senderData.error);
-    console.log(resData);
+    return await getMails(fromEmail);
   } catch (error) {
     console.log(error);
   }
@@ -67,7 +67,7 @@ export const getMails = async (email) => {
 
     const resData = await response.json();
     if (resData.error) throw new Error(resData.error);
-    console.log(resData);
+    console.log(resData, "RECIEVED MAILS");
 
     const recieved = objectToArrayWithIds(resData.recieved).reverse();
     const sent = objectToArrayWithIds(resData.sent).reverse();
@@ -80,12 +80,12 @@ export const getMails = async (email) => {
 
 // Update  Received Email-----------------------------------------------------------------------------
 
-export const updateMail = async (email, e) => {
-  const mail = removeDot(email);
+export const updateMail = async (userEmail, e, stack) => {
+  const mail = removeDot(userEmail);
 
   try {
     const response = await fetch(
-      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}/recieved/${e.id}.json`,
+      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}/${stack}/${e.id}.json`,
       {
         method: "PUT",
         body: JSON.stringify({ ...e, read: true }),
@@ -97,12 +97,28 @@ export const updateMail = async (email, e) => {
 
     const resData = await response.json();
     if (resData.error) throw new Error(resData.error);
-    console.log(resData);
+    return await getMails(mail);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    const recieved = objectToArrayWithIds(resData.recieved).reverse();
-    const sent = objectToArrayWithIds(resData.sent).reverse();
+// Delete Recieved Email
 
-    return { recieved, sent };
+export const deleteteMail = async (userEmail, e, stack) => {
+  const mail = removeDot(userEmail);
+
+  try {
+    const response = await fetch(
+      `https://mailboxclient-45cc0-default-rtdb.firebaseio.com/${mail}/${stack}/${e.id}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const resData = await response.json();
+    if (resData.error) throw new Error(resData.error);
+    return await getMails(mail);
   } catch (error) {
     console.log(error);
   }

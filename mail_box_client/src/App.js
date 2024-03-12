@@ -6,6 +6,8 @@ import Main from "./pages/Main";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
+  const sent = useSelector((state) => state.email.stack);
+  console.log("STACK", sent);
 
   return (
     <>

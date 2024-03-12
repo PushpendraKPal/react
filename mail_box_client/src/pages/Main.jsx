@@ -21,6 +21,11 @@ function Main() {
     dispatch(uiSliceActions.showCompose());
   };
 
+  const handleSentEmails = () => {
+    console.log("Sent");
+    dispatch(emailSliceActions.setStack("sent"));
+  };
+
   return (
     <div>
       <Header />
@@ -43,7 +48,11 @@ function Main() {
                 >
                   Inbox
                 </a>
-                <a className="nav-link" href="#about">
+                <a
+                  className="nav-link"
+                  href="#about"
+                  onClick={handleSentEmails}
+                >
                   Sent
                 </a>
                 <a className="nav-link" href="#contact">

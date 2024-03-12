@@ -44,7 +44,8 @@ const emailSlice = createSlice({
       state.currentEmail = action.payload;
     },
     setStack(state, action) {
-      state.currentStack = action.payload;
+      console.log(action);
+      state.stack = action.payload;
     },
   },
 });

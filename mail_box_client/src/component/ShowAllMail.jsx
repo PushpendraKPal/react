@@ -15,7 +15,7 @@ function ShowAllMail() {
   const userEmail = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
 
-  // setRecievedMails(recievedMailsStore);
+  console.log(sentMailsStore, stack, "HIIII");
   // setSentMails(sentMailsStore);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function ShowAllMail() {
       console.log(data);
       dispatch(emailSliceActions.setMails(data));
     };
-    console.log("Effect ShowAllMails");
+    //console.log("Effect ShowAllMails");
     getMailsFirsttime(userEmail);
   }, []);
 

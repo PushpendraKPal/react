@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteteMail } from "../actions/crudApis";
+import { deleteteMail, getMails } from "../actions/crudApis";
 import { emailSliceActions, uiSliceActions } from "../store/store";
 
 function ShowCurrentMail() {
@@ -32,8 +32,17 @@ function ShowCurrentMail() {
 
   let reqEmail = getEmail(emailId);
 
-  const handleDelete = async (userEmail) => {
-    let data = await deleteteMail(userEmail);
+  const handleDelete = async (userEmail, e, stack) => {
+    try {
+      const data = await deleteteMail(userEmail, e, stack);
+      if (data.error) throw new Error(data.error);
+      const res = await getMails(userEmail);
+      if (data.error) throw new Error(res.error);
+      dispatch(emailSliceActions.setMails(res));
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(uiSliceActions.hideReadMode());
   };
 
   useEffect(() => {
@@ -48,7 +57,11 @@ function ShowCurrentMail() {
           <p>
             Subject: <span className="sub">{reqEmail.subject}</span>
           </p>
-          <Button className="del_btn" onClick={() => handleDelete(userEmail)}>
+          <Button
+            variant="danger"
+            className="del_btn"
+            onClick={() => handleDelete(userEmail, reqEmail, stack)}
+          >
             Delete
           </Button>
         </div>

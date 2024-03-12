@@ -1,36 +1,40 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteteMail } from "../actions/crudApis";
+import { emailSliceActions, uiSliceActions } from "../store/store";
 
 function ShowCurrentMail() {
-  let show = false;
-  const stack = useSelector((state) => state.email.currentStack);
+  const stack = useSelector((state) => state.email.stack);
   const emailId = useSelector((state) => state.email.currentEmail);
   let receivedEmails = useSelector((state) => state.email.recieved);
   let sentEmails = useSelector((state) => state.email.sent);
-  console.log("Stack", stack);
+  let userEmail = useSelector((state) => state.auth.email);
+  const dispatch = useDispatch();
 
   const getEmail = (emailId) => {
     let email = { from: "hello", subject: "hello", value: "hello" };
-    let getmail;
+    let activeEmail = null;
 
     if (stack === "recieved") {
-      getmail = receivedEmails.find((e) => {
+      activeEmail = receivedEmails.find((e) => {
         return e.id === emailId;
       });
-    } else {
-      getmail = sentEmails.find((e) => {
+    } else if (stack) {
+      activeEmail = sentEmails.find((e) => {
         return e.id === emailId;
       });
     }
-    show = true;
-    if (!show) return email;
-    return getmail;
+
+    if (activeEmail) return activeEmail;
+    return email;
   };
 
   let reqEmail = getEmail(emailId);
 
-  const handleDelete = () => {};
+  const handleDelete = async (userEmail) => {
+    let data = await deleteteMail(userEmail);
+  };
 
   useEffect(() => {
     let p = document.getElementById("hi");
@@ -44,7 +48,7 @@ function ShowCurrentMail() {
           <p>
             Subject: <span className="sub">{reqEmail.subject}</span>
           </p>
-          <Button className="del_btn" onClick={handleDelete}>
+          <Button className="del_btn" onClick={() => handleDelete(userEmail)}>
             Delete
           </Button>
         </div>

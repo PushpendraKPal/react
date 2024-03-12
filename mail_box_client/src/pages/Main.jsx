@@ -14,7 +14,7 @@ function Main() {
   const handleInbox = () => {
     dispatch(uiSliceActions.hideReadMode());
     dispatch(uiSliceActions.hideCompose());
-    dispatch(emailSliceActions.setCurrentStack("recieved"));
+    dispatch(emailSliceActions.setStack("recieved"));
   };
 
   const handleCompose = () => {

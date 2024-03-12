@@ -18,18 +18,19 @@ const ComposeMail = ({ placeholder }) => {
   const handleSend = async () => {
     if (to || subject || value) {
       const data = await sendMail({
-        email: to,
-        data: { subject, value },
+        subject,
+        value,
+        to,
         from: userEmail,
+        read: false,
       });
-      dispatch(emailSliceActions.getMails(data));
       dispatch(uiSliceActions.hideCompose());
       dispatch(uiSliceActions.hideReadMode());
-      dispatch(emailSliceActions.setCurrentStack("recieved"));
+      dispatch(emailSliceActions.setStack("recieved"));
     } else {
-      if (!to) alert("Enter recipent email");
-      if (!subject) alert("Write subject of your composed mail");
-      if (!value) alert("write body of your composed mail");
+      if (!to) return alert("Enter recipent email");
+      if (!subject) return alert("Write subject of your composed mail");
+      if (!value) return alert("write body of your composed mail");
     }
     setValue("");
     setTo("");

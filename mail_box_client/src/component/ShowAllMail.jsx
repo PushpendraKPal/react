@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import { getMails, updateMail } from "../actions/crudApis";
+import { Col, Row } from "react-bootstrap";
+import ShowMailListItem from "./ShowMailListItem";
 import { useDispatch, useSelector } from "react-redux";
-import { emailSliceActions, uiSliceActions } from "../store/store";
+import { getMails } from "../actions/crudApis";
+import { emailSliceActions } from "../store/store";
 
 function ShowAllMail() {
-  const dispatch = useDispatch();
-  const userEmail = useSelector((state) => state.auth.email);
-  const rMails = useSelector((state) => state.email.recieved);
-  const stack = useSelector((state) => state.email.currentStack);
+  // const [recievedMails, setRecievedMails] = useState([]);
+  // const [sentMails, setSentMails] = useState([]);
 
-  const handleViewEmail = (e) => {
-    console.log("View mail");
-    dispatch(emailSliceActions.setCurrentEmail(e.id));
-    dispatch(uiSliceActions.showReadMode());
-    updateMail(userEmail, e, stack);
-  };
+  const recievedMailsStore = useSelector((state) => state.email.recieved);
+  const sentMailsStore = useSelector((state) => state.email.sent);
+  const stack = useSelector((state) => state.email.stack);
+  const userEmail = useSelector((state) => state.auth.email);
+  const dispatch = useDispatch();
+
+  // setRecievedMails(recievedMailsStore);
+  // setSentMails(sentMailsStore);
 
   useEffect(() => {
-    const getData = async (userEmail) => {
-      console.log("Effect-ShowAll");
+    const getMailsFirsttime = async (userEmail) => {
       let data = await getMails(userEmail);
-      if (!data) data = [];
-      dispatch(emailSliceActions.getMails(data));
+      console.log(data);
+      dispatch(emailSliceActions.setMails(data));
     };
-    getData(userEmail);
+    console.log("Effect ShowAllMails");
+    getMailsFirsttime(userEmail);
   }, []);
+
   return (
     <div>
-      <div className="sam_heading">Inbox</div>
-      {console.log(rMails)}
+      <div className="sam_heading">{`${stack} Mails`}</div>
       <div>
         <Row>
           <Col sm={4} className="sam_hcol">
@@ -41,27 +42,12 @@ function ShowAllMail() {
         </Row>
       </div>
       <div>
-        {rMails &&
-          rMails.map((e) => {
-            return (
-              <Row
-                onClick={() => handleViewEmail(e)}
-                key={e.id}
-                className="show_email"
-              >
-                <Col sm={4} className="sam_col sam_row">
-                  <div className={e.read === false ? "dot" : ""}></div>
-                  <div>{e.from}</div>
-                </Col>
-                <Col sm={8} className="sam_col sam_del">
-                  <div>{e.subject}</div>
-                  <div>
-                    <Button className="del_btn">Delete</Button>
-                  </div>
-                </Col>
-              </Row>
-            );
-          })}
+        {stack === "recieved" && recievedMailsStore.length >= 1 && (
+          <ShowMailListItem mails={recievedMailsStore} />
+        )}
+        {stack === "sent" && sentMailsStore.length >= 1 && (
+          <ShowMailListItem mails={sentMailsStore} />
+        )}
       </div>
     </div>
   );

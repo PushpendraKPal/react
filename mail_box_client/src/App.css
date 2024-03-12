@@ -83,6 +83,7 @@
   margin-top: 10px;
   font-size: 22px;
   margin-bottom: 20px;
+  text-transform: capitalize;
 }
 .sam_hcol {
   padding: 15px;
@@ -123,4 +124,8 @@
 .show_email {
   border: solid 1px rgb(201, 201, 201);
   margin-bottom: 10px;
+  width: 100%;
+}
+.overflow {
+  overflow: hidden;
 }

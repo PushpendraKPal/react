@@ -38,13 +38,12 @@ const AuthForm = () => {
         if (data.error)
           throw new Error("LogIn failed : If not have account please signup ");
         else {
-          console.log(data);
-          dispatch(
-            authSliceActions.login({ token: data.idToken, email: data.email })
-          );
           setError("");
           setEmail("");
           setPassword("");
+          dispatch(
+            authSliceActions.login({ token: data.idToken, email: data.email })
+          );
         }
       } catch (error) {
         setError(error.message);

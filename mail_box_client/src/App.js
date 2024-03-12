@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
+
   return (
     <>
       <div className="d_none">Learn react</div>

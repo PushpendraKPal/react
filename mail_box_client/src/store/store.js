@@ -28,22 +28,22 @@ export const authSliceActions = authSlice.actions;
 const emailState = {
   recieved: [],
   sent: [],
-  currentEmail: "",
-  currentStack: "recieved",
+  activEmail: {},
+  stack: "recieved",
 };
 
 const emailSlice = createSlice({
   initialState: emailState,
   name: "Email",
   reducers: {
-    getMails(state, action) {
+    setMails(state, action) {
       state.recieved = action.payload.recieved;
       state.sent = action.payload.sent;
     },
-    setCurrentEmail(state, action) {
+    setActivEmail(state, action) {
       state.currentEmail = action.payload;
     },
-    setCurrentStack(state, action) {
+    setStack(state, action) {
       state.currentStack = action.payload;
     },
   },

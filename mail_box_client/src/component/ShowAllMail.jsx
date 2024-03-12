@@ -24,8 +24,15 @@ function ShowAllMail() {
       console.log(data);
       dispatch(emailSliceActions.setMails(data));
     };
-    //console.log("Effect ShowAllMails");
+
     getMailsFirsttime(userEmail);
+
+    const interval = setInterval(() => {
+      getMailsFirsttime(userEmail);
+      console.log("Effect ShowAllMails");
+    }, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

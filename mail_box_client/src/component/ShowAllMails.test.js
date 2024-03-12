@@ -73,4 +73,38 @@ describe("ShowAllMail component", () => {
       expect(getByText("Failed to fetch data")).toBeInTheDocument()
     );
   });
+
+  test('renders "Show all mails" text', () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <ShowAllMail />
+      </Provider>
+    );
+    expect(getByText("Show all mails")).toBeInTheDocument();
+  });
+
+  test("fetches and displays mails", async () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <ShowAllMail />
+      </Provider>
+    );
+    await waitFor(() =>
+      expect(getByText("sender1@example.com")).toBeInTheDocument()
+    );
+    expect(getByText("Subject 1")).toBeInTheDocument();
+    expect(getByText("sender2@example.com")).toBeInTheDocument();
+    expect(getByText("Subject 2")).toBeInTheDocument();
+  });
+
+  test("calls getMails action with correct user email", async () => {
+    render(
+      <Provider store={store}>
+        <ShowAllMail />
+      </Provider>
+    );
+    await waitFor(() => {
+      expect(getMails).toHaveBeenCalledWith("test@example.com");
+    });
+  });
 });
